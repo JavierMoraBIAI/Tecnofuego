@@ -1,0 +1,297 @@
+<script type="text/javascript">
+
+	$(document).ready(function() {
+		readTable();
+		renderDT();
+    });
+
+	// Valores de servicios o partes por proyecto
+
+    var fvls = $("#detLocaciones tr").length;
+
+    $(document).on('click','#btnAddLoc',function(){
+
+		destroyTable();
+
+        let loca = $('#txtLocal').val();
+		let edol = $('#slcEdoLoc').val();
+
+		if( loca.length > 0 && edol.length ){
+            
+            let edoLbl = $('#slcEdoLoc option:selected').text();
+            let det = '';
+			let hid = '<input type="hidden" id="hidEdoLoc'+fvls+'" name="hidEdoLoc'+fvls+'" value="'+edol+'">';
+			hid += '<input type="hidden" id="hidIdReg'+fvls+'" name="hidIdReg'+fvls+'" value="">';
+
+            let btn = '<button id="btnEdi'+fvls+'" type="button" class="btn btn-info btn-sm edi-btn" idfil="'+fvls+'"><i class="fa fa-pencil"></i></button>';
+            btn += '&nbsp;&nbsp;<button id="btnDel'+fvls+'" type="button" class="btn btn-danger btn-sm del-btn" idfil="'+fvls+'"><i class="fa fa-times"></i></button>';
+
+            det = '<tr id="fLocs'+fvls+'" idfil="'+fvls+'">';
+                det += '<td id="tdLoca'+fvls+'" width="60%">'+hid+loca+'</td>';
+                det += '<td id="tdEdoLoc'+fvls+'" class="text-center" width="20%">'+edoLbl+'</td>';
+                det += '<td class="text-center" width="20%">'+btn+'</td>';
+            det += '</tr>';
+
+            $('#detLocaciones').append(det);
+            readTable();
+			restoreFields();
+			renderDT();
+            fvls++;
+
+        } else {
+            let conf = {
+				'tarmsg'  : 'contMsg',
+				'tarow'   : 'rowMsg',
+				'msg'     : 'Ingrese los valores requeridos para la locación.'
+			};
+			alertCustom(conf);
+        }
+
+	});
+
+	$(document).on('click','#btnEdiLoc',function(){
+        
+        let loca = $('#txtLocal').val();
+		let edol = $('#slcEdoLoc').val();
+		let idev = $('#hidTempId').val();
+		let line = $('#hidLine').val();
+
+		if( loca.length > 0 && edol.length ){
+
+            let edoLbl = $('#slcEdoLoc option:selected').text();
+			let hid = '<input type="hidden" id="hidEdoLoc'+line+'" name="hidEdoLoc'+line+'" value="'+edol+'">';
+			hid += '<input type="hidden" id="hidIdReg'+line+'" name="hidIdReg'+line+'" value="'+idev+'">';
+ 
+            $('#tdLoca'+line).html(hid+loca);
+            $('#tdEdoLoc'+line).html(edoLbl);
+
+            $('#btnEdiLoc').removeClass('btn-success').addClass('btn-info');
+            $('#btnEdiLoc').html('<i class="fa fa-plus"></i>');
+            $('#btnEdiLoc').attr('id','btnAddLoc');
+            readTable();
+            restoreFields();
+
+        } else {
+            let conf = {
+				'tarmsg'  : 'contMsg',
+				'tarow'   : 'rowMsg',
+				'msg'     : 'Ingrese los valores requeridos para la locación.'
+			};
+			alertCustom(conf);
+        }
+
+    });
+
+	$(document).on('click','.del-btn',function(){
+        if( confirm('¿Desea eliminar este valor de la lista?') ){
+    		$('#fLocs'+$(this).attr('idfil')).remove();
+    		readTable();
+    	}
+	});
+	
+	$(document).on('click','.edi-btn',function(){
+
+		let idln = $(this).attr('idfil');
+
+		$('#txtLocal').val($('#tdLoca'+idln).text());
+		$('#slcEdoLoc').val($('#hidEdoLoc'+idln).val());
+		$('#hidTempId').val($('#hidIdReg'+idln).val());
+		$('#hidLine').val(idln);
+
+		$('#btnAddLoc').removeClass('btn-info').addClass('btn-success');
+		$('#btnAddLoc').html('<i class="fa fa-save"></i>');
+		$('#btnAddLoc').attr('id','btnEdiLoc');
+
+	});
+	
+	function restoreFields(){
+		$('#txtLocal').val('');
+        $('#slcEdoLoc').val('');
+		$('#hidLine').val('');
+		$('#hidTempId').val('');
+        $('#txtLocal').focus();
+    }
+
+    function readTable(){
+
+        let vals = [];
+
+        $("#detLocaciones tr").each(function(i) {
+            let idfil = $(this).attr('idfil');
+            vals.push({ 
+                'ide':$('#hidIdReg'+idfil).val(),
+                'loc':$('#tdLoca'+idfil).text(),
+                'edo':$('#hidEdoLoc'+idfil).val()
+            });
+            $('#hidLocas').val(JSON.stringify(vals));
+            console.log(vals);
+        });
+
+    }
+
+</script>
+
+{header}
+
+<br>
+
+<div class="col-lg-12">
+
+	<div class="card">
+
+		<div class="card-header d-flex align-items-center">
+			<h3 class="h4">Editar proyecto/mina</h3>
+		</div>
+
+		<div class="card-body">
+
+			<p>Los campos marcados con asterisco <b class="text-danger">*</b> son <b class="text-danger">requeridos</b> </p>
+
+			<div id="rowMsg" class="row hidden-row">
+                <div class="col-lg-12">
+                    <div id="contMsg" class="alert alert-danger"></div>
+                </div>
+            </div>
+
+			<form id="sites" name="sites" action="guardar">
+
+				<input type="hidden" id="hidId" name="hidId" value="{id}">
+				<input type="hidden" id="hidLocas" name="hidLocas" value="">
+
+				<nav>
+					<div class="nav nav-tabs" id="nav-tab" role="tablist">
+						<a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Proyecto/mina</a>
+						<a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Locaciones</a>
+					</div>
+				</nav>
+
+				<div class="tab-content" id="nav-tabContent">
+					
+					<div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+
+						<br>
+
+						<div class="row">
+
+							<div class="col-lg-5">
+								<div class="form-group">
+									<label class="form-control-label">Cliente <span class="text-danger">*</span></label>
+									<select id="slcEmpresa" name="slcEmpresa" class="form-control cliente" required="">{empresas}</select>
+									<input type="hidden" name="hidCliente" id="hidCliente" class="clihid">
+								</div>
+							</div>
+		
+							<div class="col-lg-7">
+								<div class="form-group">
+									<label class="form-control-label">Nombre proyecto/mina <span class="text-danger">*</span></label>
+									<input type="text" id="txtNombre" name="txtNombre" placeholder="Nombre del sitio" class="form-control" value="{name}" required="">
+								</div>
+							</div>
+		
+						</div>
+		
+						<div class="row">
+		
+							<div class="col-lg-8">
+								<div class="form-group">
+									<label class="form-control-label">Descripción</label>
+									<input type="text" id="txtDescrip" name="txtDescrip" placeholder="Descripción del sitio" class="form-control" value="{description}">
+								</div>
+								</div>
+							
+							<div class="col-lg-4">
+								<div class="form-group">
+									<label class="form-control-label">Estado proyecto/mina <span class="text-danger">*</span></label>
+									<select id="slcEstado" name="slcEstado" class="form-control" required="">{estados}</select>
+								</div>
+							</div>
+		
+						</div>
+		
+						<br>
+
+					</div>
+
+					<div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                        
+						<br>
+
+						<div class="row">
+
+							<div class="col-lg-8">
+								<div class="form-group">
+									<label class="form-control-label">Nombre locación/área <span class="text-danger">*</span></label>
+									<input type="text" id="txtLocal" name="txtLocal" placeholder="Nombre de la locación" class="form-control" value="">
+									<input type="hidden" name="hidLine" id="hidLine">
+									<input type="hidden" name="hidTempId" id="hidTempId">
+								</div>
+							</div>
+		
+							<div class="col-lg-3">
+								<div class="form-group">
+									<label class="form-control-label">Estado <span class="text-danger">*</span></label>
+									<select id="slcEdoLoc" name="slcEdoLoc" class="form-control">{edosloc}</select>
+								</div>
+							</div>
+
+							<div class="col-lg-1">
+								<div class="form-group">
+									<label class="form-control-label">&nbsp;</label>
+									<button id="btnAddLoc" type="button" class="btn btn-info form-control">
+										<i class="fa fa-plus"></i>
+									</button>
+								</div>
+							</div>
+		
+						</div>
+
+						<br>
+
+                        <div class="row">
+
+                            <div class="col-lg-12">
+
+                                <table class="table table-hover table-striped newrone-table">
+                                    <thead>
+                                        <tr>
+                                            <th width="60%">Locación/Área</th>
+                                            <th class="text-center" width="20%">Estado</th>
+                                            <th class="text-center" width="20%">Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="detLocaciones">{locats}</tbody>
+                                </table>
+
+                            </div>
+
+                        </div>
+
+						<br>
+
+					</div>
+
+				</div>
+
+			</form>
+
+		</div>
+
+		<div class="card-footer text-right">
+
+			<button id="btnSave" type="button" class="btn btn-success" model="sites" method="guardar" form="0" target="module-cont">
+				Guardar &nbsp;&nbsp;<i class="fa fa-save"></i>
+			</button>
+
+			&nbsp;&nbsp;
+
+			<button id="btnCancel" type="button" class="btn btn-danger" action="back" modbak="index" target="module-cont">
+				Cancelar &nbsp;&nbsp;<i class="fa fa-times"></i>
+			</button>
+
+		</div>
+
+	</div>
+
+</div>
+
+{footer}

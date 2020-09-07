@@ -1,0 +1,313 @@
+<script type="text/javascript">
+
+	var o = $('#hidOpciones').val().split(',');
+	var c = $('#hidOpcsCrear').val().split(',');
+	var m = $('#hidOpcsModif').val().split(',');
+	var s = $('#hidOpcsstatu').val().split(',');
+
+	var on = [];
+	var cn = [];
+	var mn = [];
+	var sn = [];
+
+	$(document).ready(function(){
+
+		let opts = $('#hidOpciones').val();
+		let opcs = opts.split(',');
+
+		$.each(opcs, function(i, v){
+			$('#chkVer'+v).prop('checked', true);
+		});
+
+		let crev = $('#hidOpcsCrear').val();
+		let opsc = crev.split(',');
+
+		$.each(opsc, function(i, v){
+			let cad = v.split('-');
+			$('#chkCre'+cad[0]).prop('checked', true);
+		});
+
+		let modi = $('#hidOpcsModif').val();
+		let opsm = modi.split(',');
+
+		$.each(opsm, function(i, v){
+			let cad = v.split('-');
+			$('#chkMod'+cad[0]).prop('checked', true);
+		});
+
+		let dele = $('#hidOpcsstatu').val();
+		let opsd = dele.split(',');
+
+		$.each(opsd, function(i, v){
+			let cad = v.split('-');
+			$('#chkDel'+cad[0]).prop('checked', true);
+		});
+
+	});
+
+	$(document).off('click', '.chk-ver');
+	$(document).off('click', '.chk-cre');
+	$(document).off('click', '.chk-mod');
+	$(document).off('click', '.chk-del');
+
+
+	$(document).on('click','.chk-ver',function(){
+
+		if( $('#hidOpciones').val() == '' ){
+			o = [];
+		}
+
+		if( $('#hidOpcionesN').val() == '' ){
+			on = [];
+		}
+
+		let elem = $(this), valor = elem.val(), index = o.toString().split(",").indexOf(valor), indexn = on.toString().split(",").indexOf(valor);
+
+		if( elem.prop('checked') ) {			
+			if (index == -1) {
+				o.push(valor);
+				on.splice(indexn, 1);
+			} else {
+				o.splice(index, 1);
+				on.push(valor);
+			}
+		} else {
+			if (index > -1) {
+				o.splice(index, 1);
+				on.push(valor);
+			} else {
+				o.push(valor);
+				on.splice(indexn, 1);
+			}
+		}
+
+		$('#hidOpciones').val(o.toString());
+		$('#hidOpcionesN').val(on.toString());
+
+	});
+
+	$(document).on('click','.chk-cre',function(){
+
+		if( $('#hidOpcsCrear').val() == '' ){
+			c = [];
+		}
+
+		if( $('#hidOpcsCrearN').val() == '' ){
+			cn = [];
+		}
+
+		let elem = $(this), valor = elem.val(), index = c.toString().split(",").indexOf(valor), indexn = cn.toString().split(",").indexOf(valor);
+
+		if( elem.prop('checked') ) {			
+			if (index == -1) {
+				c.push(valor);
+				cn.splice(indexn, 1);
+			} else {
+				c.splice(index, 1);
+				cn.push(valor);
+			}
+		} else {
+			if (index > -1) {
+				c.splice(index, 1);
+				cn.push(valor);
+			} else {
+				c.push(valor);
+				cn.splice(indexn, 1);
+			}
+		}
+
+		$('#hidOpcsCrear').val(c.toString());
+		$('#hidOpcsCrearN').val(cn.toString());
+
+	});
+	
+	$(document).on('click','.chk-mod',function(){
+
+		if( $('#hidOpcsModif').val() == '' ){
+			m = [];
+		}
+
+		if( $('#hidOpcsModifN').val() == '' ){
+			mn = [];
+		}
+
+		let elem = $(this), valor = elem.val(), index = m.toString().split(",").indexOf(valor), indexn = mn.toString().split(",").indexOf(valor);
+
+		if( elem.prop('checked') ) {			
+			if (index == -1) {
+				m.push(valor);
+				mn.splice(indexn, 1);
+			} else {
+				m.splice(index, 1);	            	
+				mn.push(valor);
+			}
+		} else {
+			if (index > -1) {
+				m.splice(index, 1);
+				mn.push(valor);
+			} else {
+				m.push(valor);
+				mn.splice(indexn, 1);
+			}
+		}
+
+		$('#hidOpcsModif').val(m.toString());
+		$('#hidOpcsModifN').val(mn.toString());
+
+	});
+	
+	$(document).on('click','.chk-del',function(){
+
+		if( $('#hidOpcsstatu').val() == '' ){
+			s = [];
+		}
+
+		if( $('#hidOpcsstatuN').val() == '' ){
+			sn = [];
+		}
+
+		let elem = $(this), valor = elem.val(), index = s.toString().split(",").indexOf(valor), indexn = sn.toString().split(",").indexOf(valor);
+
+		if( elem.prop('checked') ) {			
+			if (index == -1) {
+				s.push(valor);
+				sn.splice(indexn, 1);
+			} else {
+				s.splice(index, 1);	            	
+				sn.push(valor);
+			}
+		} else {
+			if (index > -1) {
+				s.splice(index, 1);
+				sn.push(valor);
+			} else {
+				s.push(valor);
+				sn.splice(indexn, 1);
+			}
+		}
+
+		$('#hidOpcsstatu').val(s.toString());
+		$('#hidOpcsstatuN').val(sn.toString());
+
+	});
+
+</script>
+
+{header}
+
+<br>
+
+<div class="col-lg-12">
+
+	<div class="card">
+
+		<div class="card-header d-flex align-items-center">
+			<h3 class="h4">Editar rol</h3>
+		</div>
+
+		<div class="card-body">
+
+			<p>Los campos marcados con asterisco <b class="text-danger">*</b> son <b class="text-danger">requeridos</b> </p>
+
+			<div id="rowMsg" class="row hidden-row">
+				<div class="col-lg-12">
+					<div id="contMsg" class="alert alert-danger"></div>
+				</div>
+			</div>
+
+			<form id="roles" name="roles" action="guardar">
+
+				<input type="hidden" id="hidId" name="hidId" value="{id}">
+
+				<input type="hidden" id="hidOpciones" name="hidOpciones" value="{opcs}">
+				<input type="hidden" id="hidOpcsCrear" name="hidOpcsCrear" value="{opcrea}">
+				<input type="hidden" id="hidOpcsModif" name="hidOpcsModif" value="{opmodi}">
+				<input type="hidden" id="hidOpcsstatu" name="hidOpcsstatu" value="{opdele}">
+
+				<input type="hidden" id="hidOpcionesN" name="hidOpcionesN" value="">
+				<input type="hidden" id="hidOpcsCrearN" name="hidOpcsCrearN" value="">
+				<input type="hidden" id="hidOpcsModifN" name="hidOpcsModifN" value="">
+				<input type="hidden" id="hidOpcsstatuN" name="hidOpcsstatuN" value="">
+				
+				<div class="row">
+
+		          <div class="col-lg-8">
+		            <div class="form-group">
+		              <label class="form-control-label">Nombre rol <span class="text-danger">*</span></label>
+		              <input type="text" id="txtRole" name="txtRole" placeholder="Nombre del rol" class="form-control" required="" value="{role}">
+		            </div>
+		          </div>
+
+		          <div class="col-lg-4">
+		            <div class="form-group">
+		              <label class="form-control-label">Estado elemento <span class="text-danger">*</span></label>
+		              <select id="slcEstado" name="slcEstado" class="form-control" required="">{estados}</select>
+		            </div>
+		          </div>
+
+		      	</div>
+
+		      	<br>
+
+				<div class="row">
+					<div class="col-lg-12">
+						<h5>Opciones del rol</h5>
+					</div>
+				</div>
+
+				<br>
+
+				<div class="row">
+					<div class="col-lg-12">
+
+						<table class="table table-hover table-striped newrone-table">
+							<thead>
+								<tr>
+									<th width="52%">
+										Opción
+									</th>
+									<th class="text-center" width="12%">
+										Ver
+									</th>
+									<th class="text-center" width="12%">
+										Crear
+									</th>
+									<th class="text-center" width="12%">
+										Modificar
+									</th>
+									<th class="text-center" width="12%">
+										Eliminar/Status
+									</th>
+								</tr>
+							</thead>
+							<tbody>{opciones}</tbody>
+						</table>
+
+					</div>
+				</div>
+
+				<br>
+
+			</form>
+
+		</div>
+
+		<div class="card-footer text-right">
+
+			<button id="btnSave" type="button" class="btn btn-success" model="roles" method="guardar" form="0" target="module-cont">
+				Guardar &nbsp;&nbsp;<i class="fa fa-save"></i>
+			</button>
+
+			&nbsp;&nbsp;
+
+			<button id="btnCancel" type="button" class="btn btn-danger" action="back" modbak="index" target="module-cont">
+				Cancelar &nbsp;&nbsp;<i class="fa fa-times"></i>
+			</button>
+
+		</div>
+
+	</div>
+
+</div>
+
+{footer}

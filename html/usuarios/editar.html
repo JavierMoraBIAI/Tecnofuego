@@ -1,0 +1,198 @@
+<script type="text/javascript">
+
+	$(document).ready(function() {
+
+		// Ciudades del cliente
+		let cnf = {
+    		model 	: 'usuarios',
+    		method 	: 'sitios',
+    		params	: {
+    			val	: $('#slcCliente').val(), 
+    			def : $('#hidIdSite').val(),
+    			typ : 'echo'
+    		},
+    		target	: 'slcProyecto'
+    	};
+
+    	cmbdep(cnf);
+
+	});
+	
+	$(document).on('change','#slcCliente',function(){
+
+		let cnf = {
+			model 	: 'usuarios',
+			method 	: 'sitios',
+			params	: {
+				val	: $(this).val(), 
+				def : '',
+				typ : 'echo'
+			},
+			target	: 'slcProyecto'
+		};
+
+		cmbdep(cnf);
+
+	});
+
+</script>
+
+{header}
+
+<br>
+
+<div class="col-lg-12">
+
+  <div class="card">
+
+    <div class="card-header d-flex align-items-center">
+      <h3 class="h4">Editar usuario</h3>
+    </div>
+    
+    <div class="card-body">
+
+		<p>Los campos marcados con asterisco <b class="text-danger">*</b> son <b class="text-danger">requeridos</b>. Los tipos de imagen permitidos para la foto del usuario son <b class="text-danger">PNG</b> y <b class="text-danger">JPG</b>.</p>
+		
+		<div id="rowMsg" class="row hidden-row">
+			<div class="col-lg-12">
+				<div id="contMsg" class="alert alert-danger"></div>
+			</div>
+		</div>
+
+    	<form id="usuarios" name="usuarios">
+
+			<input type="hidden" name="hidId" id="hidId" value="{id}">
+			<input type="hidden" name="hidIdSite" id="hidIdSite" value="{siteId}">
+			<!-- Imágenes guardadas -->
+    		<input type="hidden" name="hidFoto" id="hidFoto" value="{foto}">
+			
+			<div class="row">
+
+				<div class="col-lg-4">
+					<div class="form-group">
+						<label class="form-control-label">Usuario <span class="text-danger">*</span></label>
+						<input type="text" id="txtUsuario" name="txtUsuario" placeholder="Usuario inicio de sesión" class="form-control" required="" value="{user}">
+					</div>
+				</div>
+
+				<div class="col-lg-4">
+					<div class="form-group">
+						<label class="form-control-label">Contraseña <span class="text-danger">*</span></label>
+						<input type="password" id="txtPassword" name="txtPassword" placeholder="Contraseña inicio de sesión" class="form-control">
+					</div>
+				</div>
+			
+				<div class="col-lg-4">
+					<div class="form-group">
+						<label class="form-control-label">Cédula <span class="text-danger">*</span></label>
+						<input type="text" id="txtDocumento" name="txtDocumento" placeholder="Número de cédula" class="form-control" required="" value="{idenum}">
+					</div>
+				</div>
+
+			</div>
+
+			<div class="row">
+
+				<div class="col-lg-6">
+					<div class="form-group">
+						<label class="form-control-label">Nombres <span class="text-danger">*</span></label>
+						<input type="text" id="txtNombres" name="txtNombres" placeholder="Nombres del empleado" class="form-control" required="" value="{names}">
+					</div>
+				</div>
+
+				<div class="col-lg-6">
+					<div class="form-group">
+						<label class="form-control-label">Apellidos <span class="text-danger">*</span></label>
+						<input type="text" id="txtApellidos" name="txtApellidos" placeholder="Apellidos del empleado" class="form-control" required="" value="{lastname}">
+					</div>
+				</div>
+
+			</div>
+
+			<div class="row">
+
+				<div class="col-lg-6">
+					<div class="form-group">
+						<label class="form-control-label">Cliente <span class="text-danger">*</span></label>
+						<select id="slcCliente" name="slcCliente" class="form-control cliente" required="">{empresas}</select>
+						<input type="hidden" name="hidCliente" id="hidCliente" class="clihid">
+					</div>
+				</div>
+
+				<div class="col-lg-6">
+					<div class="form-group">
+						<label class="form-control-label">Proyecto/Mina <span class="text-danger">*</span></label>
+						<select id="slcProyecto" name="slcProyecto" class="form-control proyecto" required=""></select>
+						<input type="hidden" name="hidProyecto" id="hidProyecto" class="proyhid">
+					</div>
+				</div>
+
+			</div>
+
+			<div class="row">
+
+				<div class="col-lg-4">
+					<div class="form-group">
+						<label class="form-control-label">Cargo <span class="text-danger">*</span></label>
+						<select id="slcCargo" name="slcCargo" class="form-control" required="">{cargos}</select>
+					</div>
+				</div>
+
+				<div class="col-lg-4">
+					<div class="form-group">
+						<label class="form-control-label">Rol <span class="text-danger">*</span></label>
+						<select id="slcRol" name="slcRol" class="form-control" required="">{perfiles}</select>
+					</div>
+				</div>
+
+				<div class="col-lg-4">
+					<div class="form-group">
+						<label class="form-control-label">E-mail <span class="text-danger">*</span></label>
+						<input type="text" id="txtEmail" name="txtEmail" placeholder="Ingrese E-mail" class="form-control" value="{email}" required>
+					</div>
+				</div>
+				
+			</div>
+
+			<div class="row">
+
+				<div class="col-lg-9">
+					<div class="custom-file">
+						<input type="file" class="custom-file-input" id="txtFoto" name="txtFoto" lang="es" type-allow="1">
+						<label class="custom-file-label" for="txtFoto" data-browse="Archivo" last-label="Foto del usuario">Foto del usuario</label>
+            			{fotofile}
+					</div>
+				</div>
+
+				<div class="col-lg-3">
+					<div class="form-group">
+						<label class="form-control-label">Estado usuario <span class="text-danger">*</span></label>
+						<select id="slcEstado" name="slcEstado" class="form-control" required="">{estados}</select>
+					</div>
+				</div>
+
+			</div>
+
+    	</form>
+
+    </div>
+
+    <div class="card-footer text-right">
+
+    	<button id="btnSave" type="button" class="btn btn-success" model="usuarios" method="guardar" form="0" target="module-cont">
+			Guardar &nbsp;&nbsp;<i class="fa fa-save"></i>
+		</button>
+
+    	&nbsp;&nbsp;
+
+    	<button id="btnCancel" type="button" class="btn btn-danger" action="back" modbak="index" target="module-cont">
+    		Cancelar &nbsp;&nbsp;<i class="fa fa-times"></i>
+    	</button>
+
+    </div>
+
+  </div>
+
+</div>
+
+{footer}

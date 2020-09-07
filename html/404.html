@@ -1,0 +1,37 @@
+<style type="text/css">
+	
+	.error-template {padding: 14.5% 15px;text-align: center;}
+	.error-actions {margin-top:15px;margin-bottom:15px;}
+	.error-actions .btn { margin-right:10px; }
+	.title-404{ font-size: 400%; }
+	.subtitle-404{ font-size: 250%; }
+
+</style>
+
+{header}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="error-template">
+                <h1 class="title-404">Oops!</h1>
+                <h2 class="subtitle-404">404 No Encontrado</h2>
+                <div class="error-details">
+                    Lo sentimos, un error ha ocurrido. ¡La página <b class="text-danger text-uppercase">{module}</b> requerida no fue encontrada!
+                </div>
+                <div class="error-actions">
+                    <a href="{urlhome}" class="btn btn-primary btn-lg">
+                    	<i class="fa fa-home"></i>
+                        Ir a Inicio 
+                    </a>
+                    <a href="http://www.jquery2dotnet.com" class="btn btn-default btn-lg">
+                    	<span class="glyphicon glyphicon-envelope"></span> 
+                    	Contactar Soporte
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{footer}

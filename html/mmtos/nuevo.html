@@ -1,0 +1,568 @@
+<script>
+
+	$('#iniDateMmto, #finDateMmto').datepicker({
+		startDate: "2015-01-01",
+		language: "es",
+		orientation: "bottom left",
+		autoclose: true,
+		todayHighlight: true
+	});
+
+	/*$(document).ready(function() {
+		renderDTParam('#tabPrecios');
+		renderDTParam('#tabTecs');
+	});*/
+
+</script>
+
+{header}
+
+<br>
+
+<div class="col-lg-12">
+
+	<div class="card">
+
+		<div class="card-header d-flex align-items-center">
+			<h3 class="h4">Nuevo mantenimiento sobre equipo: </h3>&nbsp; {eqlabel}
+		</div>
+
+		<div class="card-body">
+
+			<p>Los campos marcados con asterisco <b class="text-danger">*</b> son <b class="text-danger">requeridos</b></p>
+
+			<div id="rowMsg" class="row hidden-row">
+				<div class="col-lg-12">
+					<div id="contMsg" class="alert alert-danger"></div>
+				</div>
+			</div>
+
+			<div class="row">
+				
+				<div class="col-lg-12">
+
+					<form id="mmtos" name="mmtos" action="guardar">
+
+						<input type="hidden" id="hidId" name="hidId">
+						<input type="hidden" id="hidIdEquip" name="hidIdEquip" value="{idequip}">
+						<input type="hidden" id="hidIdSite" name="hidIdSite" value="{idsite}">
+						<input type="hidden" name="hidVlsTecs" id="hidVlsTecs">
+						<input type="hidden" name="hidVlsComps" id="hidVlsComps">
+						<input type="hidden" id="hidVlsAddComp" name="hidVlsAddComp" value="">
+						<input type="hidden" id="hidVlsDelComp" name="hidVlsDelComp" value="">
+						<!-- Control de repuestos -->
+						<input type="text" id="hidVlsAddRep" name="hidVlsAddRep" value="">
+						<input type="text" id="hidVlsDelRep" name="hidVlsDelRep" value="">
+
+						<ul class="nav nav-tabs" id="myTab" role="tablist">
+						  <li class="nav-item">
+						    <a class="nav-link active" id="general-tab" data-toggle="tab" href="#general" role="tab" aria-controls="general" aria-selected="true">General</a>
+						  </li>
+						  <li class="nav-item">
+						    <a class="nav-link" id="tecnicos-tab" data-toggle="tab" href="#tecnicos" role="tab" aria-controls="tecnicos" aria-selected="false">Técnicos</a>
+						  </li>
+						  <li class="nav-item">
+						    <a class="nav-link" id="compone-tab" data-toggle="tab" href="#compone" role="tab" aria-controls="compone" aria-selected="false">Componentes</a>
+						  </li>
+						  <li class="nav-item">
+						    <a class="nav-link" id="prtsrv-tab" data-toggle="tab" href="#prtsrv" role="tab" aria-controls="prtsrv" aria-selected="false">Partes y servicios</a>
+						  </li>						  
+						</ul>
+						
+						<div class="tab-content" id="myTabContent">
+						  
+						  <div class="tab-pane fade show active" id="general" role="tabpanel" aria-labelledby="general-tab">
+
+							<div class="row mt-3">
+									
+								<div class="col-lg-3">
+									<label class="form-control-label" for="txtFecIniMmto">
+										Fecha de inicio <span class="text-danger">*</span>
+									</label>
+									<div class="input-group date mb-3" id="iniDateMmto">
+										<input type='text' class="form-control" id="txtFecIniMmto" name="txtFecIniMmto" aria-describedby="basic-addon3" placeholder="Fecha inicial" value="" required/>
+										<div class="input-group-addon">
+											<span class="input-group-text" id="basic-addon3"><i class="fa fa-calendar addon-field"></i></span>
+										</div>
+									</div>
+								</div>
+
+								<div class="col-lg-3">
+									<div class="form-group">
+										<label class="form-control-label">Hora de inicio <span class="text-danger">*</span></label>
+										<input type="time" id="txtHoraInicio" name="txtHoraInicio" placeholder="Hora de inicio" class="form-control" required>
+									</div>
+								</div>
+
+								<div class="col-lg-3">
+									<label class="form-control-label" for="txtFecFinMmto">
+										Fecha de finalización <span class="text-danger">*</span>
+									</label>
+									<div class="input-group date mb-3" id="finDateMmto">
+										<input type='text' class="form-control" id="txtFecFinMmto" name="txtFecFinMmto" aria-describedby="basic-addon3" placeholder="Fecha final" value="" required/>
+										<div class="input-group-addon">
+											<span class="input-group-text" id="basic-addon3"><i class="fa fa-calendar addon-field"></i></span>
+										</div>
+									</div>
+								</div>
+
+								<div class="col-lg-3">
+									<div class="form-group">
+										<label class="form-control-label">Hora de finalización <span class="text-danger">*</span></label>
+										<input type="time" id="txtHoraFinal" name="txtHoraFinal" placeholder="Hora de finalización" class="form-control" required>
+									</div>
+								</div>
+
+							</div>
+
+							<div class="row">
+
+								<div class="col-lg-3">
+									<div class="form-group">
+										<label class="form-control-label">Horómetro inicio</label>
+										<input type="text" id="txtHoroIni" name="txtHoroIni" placeholder="Horómetro inicial" class="form-control" value="{horomet}" required>
+									</div>
+								</div>
+								
+								<div class="col-lg-3">
+									<div class="form-group">
+										<label class="form-control-label">Horómetro fin</label>
+										<input type="text" id="txtHoroFin" name="txtHoroFin" placeholder="Horómetro final" class="form-control">
+									</div>
+								</div>
+
+								<div class="col-lg-6">
+									<div class="form-group">
+										<label class="form-control-label">Localización <span class="text-danger">*</span></label>
+										<select id="slcLocal" name="slcLocal" class="form-control" required="">{locatio}</select>
+									</div>
+								</div>
+
+							</div>
+
+							<div class="row">
+
+								<div class="col-lg-12">
+									<div class="form-group">
+										<label class="form-control-label" for="tarObservActiv">Observación de la actividad</label>
+										<textarea class="form-control" name="tarObservActiv" id="tarObservActiv" rows="3"></textarea>
+									</div>
+								</div>
+
+							</div>
+
+						  </div>
+
+						  <div class="tab-pane fade" id="tecnicos" role="tabpanel" aria-labelledby="tecnicos-tab">
+							
+							<div class="row mt-3">
+
+								<div class="col-lg-12">
+									<div class="form-group">
+										<label class="form-control-label">Técnico <span class="text-danger">*</span></label>
+										<select id="slcTecnico" name="slcTecnico" class="form-control">{tecnicos}</select>
+										<input type="hidden" name="hidCurLinTec" id="hidCurLinTec">
+										<!--<input type="text" id="txtNombreTec" name="txtNombreTec" placeholder="Nombre técnico" class="form-control" readonly>-->
+									</div>
+								</div>
+
+							</div>
+
+							<div class="row">
+
+								<div class="col-lg-3 offset-lg-6">
+									<div class="form-group">
+										<label class="form-control-label">Grupo <span class="text-danger">*</span></label>
+										<input type="text" id="txtGrupo" name="txtGrupo" class="form-control" readonly placeholder="Grupo técnico">
+									</div>
+								</div>
+
+								<div class="col-lg-2">
+									<div class="form-group">
+										<label class="form-control-label">% Participación <span class="text-danger">*</span></label>
+										<input type="text" id="txtPorPar" name="txtPorPar" class="form-control" placeholder="Ingrese %">
+									</div>
+								</div>
+
+								<div class="col-lg-1">
+									<div class="form-group">
+										<label class="form-control-label">&nbsp;</label>
+										<button id="btnAddTec" type="button" class="btn btn-info form-control">
+											<i class="fa fa-plus"></i>
+										</button>
+									</div>
+								</div>
+
+							</div>
+
+							<div class="row mt-3">
+
+								<div class="col-lg-12">
+
+									<table id="tabTecs" class="table table-hover table-striped newrone-table">
+										<thead>
+											<tr>
+												<th class="text-center" width="15%">
+													Cédula
+												</th>
+												<th class="text-center" width="50%">
+													Nombre
+												</th>
+												<th class="text-center" width="15%">
+													Grupo
+												</th>
+												<th class="text-center" width="10%">
+													%
+												</th>
+												<th class="text-center" width="10%">
+													Acciones
+												</th>
+											</tr>
+										</thead>
+										<tbody id="tabtecs"></tbody>
+									</table>
+
+								</div>
+
+							</div>
+							
+						  </div>
+						  
+						  <div class="tab-pane fade" id="compone" role="tabpanel" aria-labelledby="compone-tab">
+
+							{accorde}
+
+						  </div>
+
+						  <div class="tab-pane fade" id="prtsrv" role="tabpanel" aria-labelledby="prtsrv-tab">
+							
+							<div class="row mt-3">
+
+								<div class="col-lg-2">
+									<div class="form-group">
+										<label class="form-control-label">Parte número <span class="text-danger">*</span></label>
+										<input type="text" id="txtParNum" name="txtParNum" placeholder="Parte número" class="form-control">
+										<input type="hidden" name="hidValUnit" id="hidValUnit">
+										<input type="hidden" name="hidElemento" id="hidElemento">
+										<input type="hidden" name="hidCurIdCom" id="hidCurIdCom">
+										<input type="hidden" name="hidCurLinCom" id="hidCurLinCom">
+									</div>
+								</div>
+
+								<div class="col-lg-2">
+									<div class="form-group">
+										<label class="form-control-label">Tipo parte <span class="text-danger">*</span></label>
+										<select id="slcTipo" name="slcTipo" class="form-control">{partype}</select>
+									</div>
+								</div>
+
+								<div class="col-lg-4">
+									<div class="form-group">
+										<label class="form-control-label">Familia <span class="text-danger">*</span></label>
+										<select id="slcFamilia" name="slcFamilia" class="form-control">{familia}</select>
+									</div>
+								</div>
+
+								<div class="col-lg-4">
+									<div class="form-group">
+										<label class="form-control-label">Categoría <span class="text-danger">*</span></label>
+										<select id="slcCategoria" name="slcCategoria" class="form-control">{categoria}</select>
+									</div>
+								</div>
+
+							</div>
+							
+							<div class="row">
+								
+								<div class="col-lg-9">
+									<div class="form-group">
+										<label class="form-control-label">Parte o servicio <span class="text-danger">*</span></label>
+										<select id="slcElemento" name="slcElemento" class="form-control"></select>
+									</div>
+								</div>
+
+								<div class="col-lg-2">
+									<div class="form-group">
+										<label class="form-control-label">Cantidad <span class="text-danger">*</span></label>
+										<input type="text" id="txtCantidad" name="txtCantidad" placeholder="Cantidad" class="form-control">
+									</div>
+								</div>
+
+								<div class="col-lg-1">
+									<div class="form-group">
+										<label class="form-control-label">&nbsp;</label>
+										<button id="btnAddEle" type="button" class="btn btn-info form-control">
+											<i class="fa fa-plus"></i>
+										</button>
+									</div>
+								</div>
+
+							</div>
+
+							<div class="row mt-3">
+
+								<div class="col-lg-12">
+
+									<table id="tabPrecios" class="table table-hover table-striped newrone-table">
+										<thead>
+											<tr>
+												<th class="text-center" width="45%">
+													Descripción
+												</th>
+												<th class="text-center" width="10%">
+													Cant.
+												</th>
+												<th class="text-center" width="10%">
+													P/N
+												</th>
+												<th class="text-center" width="15%">
+													V/U (USD)
+												</th>
+												<th class="text-center" width="15%">
+													Total (USD)
+												</th>
+												<th class="text-center" width="5%">
+													Acciones
+												</th>
+											</tr>
+										</thead>
+										<tbody id="tpartes"></tbody>
+									</table>
+
+								</div>
+
+							</div>
+
+							<div class="row mt-3">
+
+								<div class="col-lg-12">
+
+									<table class="table table-borderless">
+										<tr>
+											<td width="75%" class="text-right"><span class="font-weight-bold text-primary">TOTALES</span></td>
+											<td width="15%" class="text-right bg-light font-weight-bold">$ <span id="totales">0</span></td>
+											<td width="10%">&nbsp;</td>
+										</tr>
+									</table>
+								
+								</div>
+								
+							</div>
+							
+						  </div>
+
+						</div>
+
+				      	<br>
+
+					</form>
+
+				</div>
+
+			</div>
+
+		</div>
+
+		<div class="card-footer text-right">
+
+			<button id="btnSaveAct" type="button" class="btn btn-success" model="mmtos" method="guardar" form="0" target="module-cont">
+				Guardar &nbsp;&nbsp;<i class="fa fa-save"></i>
+			</button>
+
+			&nbsp;&nbsp;
+
+			<button id="btnCancel" type="button" class="btn btn-danger" action="back" modbak="index" target="module-cont">
+				Cancelar &nbsp;&nbsp;<i class="fa fa-times"></i>
+			</button>
+
+		</div>
+
+	</div>
+
+</div>
+
+{footer}
+
+<!-- Modal -->
+<div class="modal fade" id="modCompos" tabindex="-1" role="dialog" aria-labelledby="modComposLabel" aria-hidden="true">
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="modComposLabel">Reemplazar componente en el equipo</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+
+				<div id="rowMsgModal" class="row hidden-row">
+					<div class="col-lg-12">
+						<div id="contMsgModal" class="alert alert-danger"></div>
+					</div>
+				</div>
+
+				<form id="frmModalCompo" name="frmModalCompo">
+
+					<div class="row">
+
+						<div class="col-lg-4">
+							<div class="form-group">
+								<label class="form-control-label">Cliente <span class="text-danger">*</span></label>
+								<select id="slcClienteMod" name="slcClienteMod" class="form-control form-control-sm cliente">{empresas}</select>
+								<input type="hidden" name="hidClienteMod" id="hidClienteMod" class="clihid">
+							</div>
+						</div>
+
+						<div class="col-lg-8">
+							<div class="form-group">
+								<label class="form-control-label">Proyectos/Minas <span class="text-danger">*</span></label>
+								<select id="slcSitiosMod" name="slcSitiosMod" class="form-control form-control-sm proyecto"></select>
+								<input type="hidden" name="hidProyectoMod" id="hidProyectoMod" class="proyhid">
+							</div>
+						</div>
+
+					</div>
+
+					<div class="row">
+
+						<div class="col-lg-4">
+							<div class="form-group">
+								<label class="form-control-label">Tipo de sistema <span class="text-danger">*</span></label>
+								<select id="slcTySysMod" name="slcTySysMod" class="form-control form-control-sm">{sistemas}</select>
+							</div>
+						</div>
+
+						<div class="col-lg-4">
+							<div class="form-group">
+								<label class="form-control-label">Familias <span class="text-danger">*</span></label>
+								<select id="slcFamiliasMod" name="slcFamiliasMod" class="form-control form-control-sm">{familia}</select>
+							</div>
+						</div>
+		
+						<div class="col-lg-4">
+							<div class="form-group">
+								<label class="form-control-label">Categorías <span class="text-danger">*</span></label>
+								<select id="slcCategoriasMod" name="slcCategoriasMod" class="form-control form-control-sm">{categoria}</select>
+							</div>
+						</div>
+
+					</div>
+
+					<div class="row">
+
+						<div class="col-lg-8">
+							<div class="form-group">
+								<label class="form-control-label">Descripción <span class="text-danger">*</span></label>
+								<input type="text" id="txtDescMod" name="txtDescMod" placeholder="Descripción" class="form-control form-control-sm">
+							</div>
+						</div>
+
+						<div class="col-lg-3">
+							<div class="form-group">
+								<label class="form-control-label">Serial/Consecutivo <span class="text-danger">*</span></label>
+								<input type="text" id="txtSerialMod" name="txtSerialMod" placeholder="Serial" class="form-control form-control-sm">
+							</div>
+						</div>
+
+						<div class="col-lg-1">
+							<div class="form-group">
+								<label class="form-control-label">&nbsp;</label>
+								<button id="btnSearchComp" type="button" class="btn btn-info form-control form-control-sm lupa-btn">
+									<i class="fa fa-search center-lupa"></i>
+								</button>
+							</div>
+						</div>
+
+					</div>
+
+					<br>
+
+					<div class="row">
+
+						<div id="detCompos" class="col-lg-12" style="font-size: 0.8em;"></div>
+
+					</div>
+
+					<br>
+
+				
+				</form>
+
+			</div>
+			<div class="modal-footer">
+				<button id="btnCancelModCompo" type="button" class="btn btn-danger" data-dismiss="modal">
+					Cerrar &nbsp;&nbsp;<i class="fa fa-times"></i>
+				</button>
+				<button id="btnSaveModCompo" type="button" class="btn btn-success">
+					Agregar &nbsp;&nbsp;<i class="fa fa-plus"></i>
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Modal Repuestos -->
+<div class="modal fade" id="modRepuest" tabindex="-1" role="dialog" aria-labelledby="modRepuestLabel" aria-hidden="true">
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content">
+		<div class="modal-header">
+			<h5 class="modal-title" id="modRepuestLabel">Reemplazar repuesto en el equipo</h5>
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+			</button>
+		</div>
+		<div class="modal-body">
+
+			<div id="rowMsgModalRepu" class="row hidden-row">
+				<div class="col-lg-12">
+					<div id="contMsgModalRepu" class="alert alert-danger"></div>
+				</div>
+			</div>
+
+			<form id="frmModalRepus" name="frmModalRepus">
+
+				<div class="row">
+
+					<div class="col-lg-6">
+						<div class="form-group">
+							<label class="form-control-label">Familias <span class="text-danger">*</span></label>
+							<select id="slcFamiliasModRep" name="slcFamiliasMod" class="form-control form-control-sm rep-fld">{familia}</select>
+						</div>
+					</div>
+	
+					<div class="col-lg-6">
+						<div class="form-group">
+							<label class="form-control-label">Categorías <span class="text-danger">*</span></label>
+							<select id="slcCategoriasModRep" name="slcCategoriasModRep" class="form-control form-control-sm rep-fld">{categoria}</select>
+						</div>
+					</div>
+
+				</div>
+
+				<div class="row">
+
+					<div class="col-lg-12">
+						<div class="form-group">
+							<label class="form-control-label">Repuesto <span class="text-danger">*</span></label>
+							<select id="slcRepuesto" name="slcRepuesto" class="form-control form-control-sm rep-fld"></select>
+						</div>
+					</div>
+
+				</div>
+
+				<br>
+			
+			</form>
+
+		</div>
+		<div class="modal-footer">
+			<button id="btnCancelModRepus" type="button" class="btn btn-danger" data-dismiss="modal">
+				Cerrar &nbsp;&nbsp;<i class="fa fa-times"></i>
+			</button>
+			<button id="btnSaveModRepus" type="button" class="btn btn-success">
+				Agregar &nbsp;&nbsp;<i class="fa fa-plus"></i>
+			</button>
+		</div>
+		</div>
+	</div>
+</div>

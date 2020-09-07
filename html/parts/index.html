@@ -1,0 +1,113 @@
+{header}
+
+<br>
+
+<div class="col-lg-12">
+
+  <div class="card">
+
+    <div class="card-header d-flex align-items-center">
+      <h3 class="h4">Listar partes y servicios</h3>
+    </div>
+    
+    <div class="card-body">
+      
+      <form id="parts" name="parts" action="listar">
+
+        <div class="row">
+
+            <div class="col-lg-3 offset-lg-9">
+                <div class="form-group">
+                    <label class="form-control-label">Parte número</label>
+                    <input type="text" id="txtPartNum" name="txtPartNum" placeholder="Número de parte" class="form-control">
+                </div>
+            </div>
+
+        </div>
+
+      	<div class="row">
+
+            <div class="col-lg-6">
+                <div class="form-group">
+                    <label class="form-control-label">Descripción</label>
+                    <input type="text" id="txtDescripcion" name="txtDescripcion" placeholder="Descripción parte o servicio" class="form-control">
+                </div>
+            </div>
+
+            <div class="col-lg-3">
+                <div class="form-group">
+                    <label class="form-control-label">Familia</label>
+                    <select id="slcFamilia" name="slcFamilia" class="form-control">{familias}</select>
+                </div>
+            </div>
+
+            <div class="col-lg-3">
+                <div class="form-group">
+                    <label class="form-control-label">Categorías</label>
+                    <select id="slcCategoria" name="slcCategoria" class="form-control">{categs}</select>
+                </div>
+            </div>
+
+          </div>
+          
+          <div class="row">
+
+            <div class="col-lg-3 offset-lg-6">
+                <div class="form-group">
+                    <label class="form-control-label">Tipo de parte</label>
+                    <select id="slcTipo" name="slcTipo" class="form-control" required="">{partype}</select>
+                </div>
+            </div>
+
+            <div class="col-lg-3">
+                <div class="form-group">
+                    <label class="form-control-label">Estado parte o servicio</label>
+                    <select id="slcEstado" name="slcEstado" class="form-control">{estados}</select>
+                </div>
+            </div>
+
+          </div>
+
+      </form>
+
+    </div>
+
+    <div class="card-footer text-right">
+
+    	<button id="btnList" type="button" class="btn btn-info" target="table-cont">
+    		Buscar &nbsp;&nbsp;<i class="fa fa-search"></i>
+    	</button>
+
+    	&nbsp;&nbsp;
+
+    	<button id="btnNew" type="button" class="btn btn-success" target="module-cont">
+    		Nuevo &nbsp;&nbsp;<i class="fa fa-plus"></i>
+    	</button>
+
+    	&nbsp;&nbsp;
+
+    	<button id="btnCancel" type="button" class="btn btn-primary" action="clean-form" target="table-cont">
+            Limpiar &nbsp;&nbsp;<i class="fa fa-eraser"></i>
+        </button>
+
+    </div>
+  
+  </div>
+
+	<div class="card">
+
+		<div class="card-header d-flex align-items-center">
+			<h3 class="h4">Resultados</h3>
+		</div>
+
+		<div class="card-body">
+
+			<div id="table-cont" class="table-responsive" style="display: none;"></div>
+
+		</div>
+
+	</div>
+
+</div>
+
+{footer}

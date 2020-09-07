@@ -1,0 +1,423 @@
+{header}
+
+<br>
+
+<div class="col-lg-12">
+
+	<div class="card">
+
+		<div class="card-header d-flex align-items-center">
+			<h3 class="h4">Nuevo equipo</h3>
+		</div>
+
+		<div class="card-body">
+
+			<p>Los campos marcados con asterisco <b class="text-danger">*</b> son <b class="text-danger">requeridos</b> </p>
+
+			<div id="rowMsg" class="row hidden-row">
+				<div class="col-lg-12">
+					<div id="contMsg" class="alert alert-danger"></div>
+				</div>
+			</div>
+
+			<form id="equipment" name="equipment" action="guardar">
+
+				<input type="hidden" id="hidId" name="hidId" value="">
+				<input type="hidden" id="hidVlsComp" name="hidVlsComp" value="">
+				<input type="hidden" id="hidVlsReps" name="hidVlsReps" value="">
+
+				<nav>
+					<div class="nav nav-tabs" id="nav-tab" role="tablist">
+						<a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">General</a>
+						<a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Componente</a>
+						<a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Otros</a>
+					</div>
+				</nav>
+
+				<div class="tab-content" id="nav-tabContent">
+                    
+					<div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+						
+						<br>
+
+						<div class="row">
+
+							<div class="col-lg-4">
+								<div class="form-group">
+									<label class="form-control-label">Cliente <span class="text-danger">*</span></label>
+									<select id="slcCliente" name="slcCliente" class="form-control cliente">{empresas}</select>
+              						<input type="hidden" name="hidCliente" id="hidCliente" class="clihid">
+								</div>
+							</div>
+		
+							<div class="col-lg-8">
+								<div class="form-group">
+									<label class="form-control-label">Proyectos/Minas <span class="text-danger">*</span></label>
+									<select id="slcSitios" name="slcSitios" class="form-control proyecto"></select>
+              						<input type="hidden" name="hidProyecto" id="hidProyecto" class="proyhid">
+								</div>
+							</div>
+		
+						</div>
+	
+						<div class="row">
+		
+							<div class="col-lg-4">
+								<div class="form-group">
+									<label class="form-control-label">Flota de equipo <span class="text-danger">*</span></label>
+									<select id="slcFlotas" name="slcFlotas" class="form-control" required="">{flotas}</select>
+								</div>
+							</div>
+		
+							<div class="col-lg-4">
+								<div class="form-group">
+									<label class="form-control-label">Número interno <span class="text-danger">*</span></label>
+									<input type="text" id="txtNumInter" name="txtNumInter" placeholder="Número interno" class="form-control val-code" fld="1" value="" required="">
+								</div>
+							</div>
+
+							<div class="col-lg-4">
+								<div class="form-group">
+									<label class="form-control-label">Número serial</label>
+									<input type="text" id="txtNumSer" name="txtNumSer" placeholder="Número serial" class="form-control val-code" fld="2">
+								</div>
+							</div>
+								
+						</div>
+	
+						<div class="row">
+		
+							<div class="col-lg-4">
+								<div class="form-group">
+									<label class="form-control-label">Marca <span class="text-danger">*</span></label>
+									<select id="slcMarca" name="slcMarca" class="form-control" required>{marcas}</select>
+								</div>
+							</div>
+
+							<div class="col-lg-4">
+								<div class="form-group">
+									<label class="form-control-label">Modelo <span class="text-danger">*</span></label>
+									<select id="slcModelo" name="slcModelo" class="form-control" required></select>
+								</div>
+							</div>
+		
+							<div class="col-lg-4">
+								<div class="form-group">
+									<label class="form-control-label">Horómetro</label>
+									<input type="text" id="txtHorometro" name="txtHorometro" placeholder="Valor horómetro" class="form-control" value="">
+								</div>
+							</div>
+		
+						</div>
+							
+						<div class="row">
+		
+							<div class="col-lg-4">
+								<div class="form-group">
+									<label class="form-control-label">Sistema de extinción <span class="text-danger">*</span></label>
+									<select id="slcSiExtin" name="slcSiExtin" class="form-control" required="">{sino}</select>
+								</div>
+							</div>
+		
+							<div class="col-lg-4">
+								<div class="form-group">
+									<label class="form-control-label">Sistema de detección <span class="text-danger">*</span></label>
+									<select id="slcSiDetec" name="slcSiDetec" class="form-control" required="">{sino}</select>
+								</div>
+							</div>
+		
+							<div class="col-lg-4">
+								<div class="form-group">
+									<label class="form-control-label">Estado equipo <span class="text-danger">*</span></label>
+									<select id="slcEstado" name="slcEstado" class="form-control" required="">{estados}</select>
+								</div>
+							</div>
+		
+						</div>
+		
+						<br>
+
+					</div>
+
+					<div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+
+						<div class="row">
+							<div class="col-lg-1">
+								<div class="form-group">
+									<label class="form-control-label">&nbsp;</label>
+									<button id="btnAddCmp" type="button" class="btn btn-info form-control">
+										<i class="fa fa-plus"></i>
+									</button>
+								</div>
+							</div>
+						</div>
+
+						<br>
+
+						<div class="row">
+
+							<div class="col-lg-12">
+
+								<table id="tabCompos" class="table table-hover table-striped newrone-table">
+									<thead>
+										<tr>
+											<th class="text-center" width="5%">
+												Ítem
+											</th>
+											<th class="text-center" width="40%">
+												Descripción
+											</th>
+											<th class="text-center" width="20%">
+												SN/Consec.
+											</th>
+											<th class="text-center" width="20%">
+												Familia
+											</th>
+											<th class="text-center" width="20%">
+												Categoría
+											</th>
+											<th class="text-center" width="5%">
+												Acciones
+											</th>
+										</tr>
+									</thead>
+									<tbody id="tcompos"></tbody>
+								</table>
+
+							</div>
+
+						</div>
+
+						<br>
+
+					</div>
+
+					<div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+						
+						<br>
+
+						<div class="row">
+
+							<div class="col-lg-3">
+								<div class="form-group">
+									<label class="form-control-label">Familias <span class="text-danger">*</span></label>
+									<select id="slcFamilias" name="slcFamilias" class="form-control ctrl-fld">{familia}</select>
+									<input type="hidden" name="hidIdTrRep" id="hidIdTrRep">
+								</div>
+							</div>
+			
+							<div class="col-lg-3">
+								<div class="form-group">
+									<label class="form-control-label">Categorías <span class="text-danger">*</span></label>
+									<select id="slcCategorias" name="slcCategorias" class="form-control ctrl-fld">{categoria}</select>
+								</div>
+							</div>
+
+							<div class="col-lg-6">
+								<div class="form-group">
+									<label class="form-control-label">Repuesto <span class="text-danger">*</span></label>
+									<select id="slcRepuesto" name="slcRepuesto" class="form-control ctrl-fld"></select>
+								</div>
+							</div>
+
+						</div>
+
+						<div class="row" id="rboxes"></div>
+
+						<div class="row">
+							<div class="col-lg-1 offset-lg-10">
+								<div class="form-group">
+									<button id="btnCnclRep" type="button" class="btn btn-danger form-control" title="Cancelar">
+										<i class="fa fa-times"></i>
+									</button>
+								</div>
+							</div>
+							<div class="col-lg-1">
+								<div class="form-group">
+									<button id="btnAddRep" type="button" class="btn btn-info form-control" title="Agregar repuesto">
+										<i class="fa fa-plus"></i>
+									</button>
+								</div>
+							</div>
+						</div>
+
+						<br>
+
+						<div class="row">
+
+							<div class="col-lg-12">
+
+								<table id="tabRepos" class="table table-hover table-striped newrone-table">
+									<thead>
+										<tr>
+											<th class="text-center" width="10%">
+												Ítem
+											</th>
+											<th class="text-center" width="40%">
+												Descripción
+											</th>
+											<th class="text-center" width="20%">
+												Familia
+											</th>
+											<th class="text-center" width="20%">
+												Categoría
+											</th>
+											<th class="text-center" width="10%">
+												Acciones
+											</th>
+										</tr>
+									</thead>
+									<tbody id="detRepus"></tbody>
+								</table>
+
+							</div>
+
+						</div>
+
+						<br>
+
+					</div>
+
+				</div>
+
+			</form>
+
+		</div>
+
+		<div class="card-footer text-right">
+
+			<button id="btnSave" type="button" class="btn btn-success" model="equipment" method="guardar" form="0" target="module-cont">
+				Guardar &nbsp;&nbsp;<i class="fa fa-save"></i>
+			</button>
+
+			&nbsp;&nbsp;
+
+			<button id="btnCancel" type="button" class="btn btn-danger" action="back" modbak="index" target="module-cont">
+				Cancelar &nbsp;&nbsp;<i class="fa fa-times"></i>
+			</button>
+
+		</div>
+
+	</div>
+
+</div>
+
+{footer}
+
+<!-- Modal -->
+<div class="modal fade" id="modCompos" tabindex="-1" role="dialog" aria-labelledby="modComposLabel" aria-hidden="true">
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content">
+		<div class="modal-header">
+			<h5 class="modal-title" id="modComposLabel">Agregar componente a la lista</h5>
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+			</button>
+		</div>
+		<div class="modal-body">
+
+			<div id="rowMsgModal" class="row hidden-row">
+				<div class="col-lg-12">
+					<div id="contMsgModal" class="alert alert-danger"></div>
+				</div>
+			</div>
+
+			<form id="frmModalCompo" name="frmModalCompo">
+
+				<div class="row">
+
+					<div class="col-lg-4">
+						<div class="form-group">
+							<label class="form-control-label">Cliente <span class="text-danger">*</span></label>
+							<select id="slcClienteMod" name="slcClienteMod" class="form-control form-control-sm cliente">{empresas}</select>
+							<input type="hidden" name="hidClienteMod" id="hidClienteMod" class="clihid">
+						</div>
+					</div>
+
+					<div class="col-lg-8">
+						<div class="form-group">
+							<label class="form-control-label">Proyectos/Minas <span class="text-danger">*</span></label>
+							<select id="slcSitiosMod" name="slcSitiosMod" class="form-control form-control-sm proyecto"></select>
+							<input type="hidden" name="hidProyectoMod" id="hidProyectoMod" class="proyhid">
+						</div>
+					</div>
+
+				</div>
+
+				<div class="row">
+
+					<div class="col-lg-4">
+						<div class="form-group">
+							<label class="form-control-label">Tipo de sistema <span class="text-danger">*</span></label>
+							<select id="slcTySysMod" name="slcTySysMod" class="form-control form-control-sm">{sistemas}</select>
+						</div>
+					</div>
+
+					<div class="col-lg-4">
+						<div class="form-group">
+							<label class="form-control-label">Familias <span class="text-danger">*</span></label>
+							<select id="slcFamiliasMod" name="slcFamiliasMod" class="form-control form-control-sm">{familia}</select>
+						</div>
+					</div>
+	
+					<div class="col-lg-4">
+						<div class="form-group">
+							<label class="form-control-label">Categorías <span class="text-danger">*</span></label>
+							<select id="slcCategoriasMod" name="slcCategoriasMod" class="form-control form-control-sm">{categoria}</select>
+						</div>
+					</div>
+
+				</div>
+
+				<div class="row">
+
+					<div class="col-lg-8">
+						<div class="form-group">
+							<label class="form-control-label">Descripción <span class="text-danger">*</span></label>
+							<input type="text" id="txtDescMod" name="txtDescMod" placeholder="Descripción" class="form-control form-control-sm">
+						</div>
+					</div>
+
+					<div class="col-lg-3">
+						<div class="form-group">
+							<label class="form-control-label">Serial/Consecutivo <span class="text-danger">*</span></label>
+							<input type="text" id="txtSerialMod" name="txtSerialMod" placeholder="Serial" class="form-control form-control-sm">
+						</div>
+					</div>
+
+					<div class="col-lg-1">
+						<div class="form-group">
+							<label class="form-control-label">&nbsp;</label>
+							<button id="btnSearchComp" type="button" class="btn btn-info form-control form-control-sm lupa-btn">
+								<i class="fa fa-search center-lupa"></i>
+							</button>
+						</div>
+					</div>
+
+				</div>
+
+				<br>
+
+				<div class="row">
+
+					<div id="detCompos" class="col-lg-12" style="font-size: 0.8em;"></div>
+
+				</div>
+
+				<br>
+
+			
+			</form>
+
+		</div>
+		<div class="modal-footer">
+			<button id="btnCancelModCompo" type="button" class="btn btn-danger" data-dismiss="modal">
+				Cerrar &nbsp;&nbsp;<i class="fa fa-times"></i>
+			</button>
+			<button id="btnSaveModCompo" type="button" class="btn btn-success">
+				Agregar &nbsp;&nbsp;<i class="fa fa-plus"></i>
+			</button>
+		</div>
+		</div>
+	</div>
+</div>

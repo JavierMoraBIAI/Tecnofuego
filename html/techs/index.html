@@ -1,0 +1,136 @@
+<script type="text/javascript">
+	
+	$(document).on('change','#slcCliente',function(){
+
+    	let cnf = {
+    		model 	: 'techs',
+    		method 	: 'sitios',
+    		params	: {
+    			val	: $(this).val(), 
+    			def : '',
+    			typ : 'echo'
+    		},
+    		target	: 'slcProyecto'
+    	};
+
+    	cmbdep(cnf);
+
+    });
+
+</script>
+
+{header}
+
+<br>
+
+<div class="col-lg-12">
+
+  <div class="card">
+
+    <div class="card-header d-flex align-items-center">
+      <h3 class="h4">Listar técnicos</h3>
+    </div>
+    
+    <div class="card-body">
+      
+      <form id="techs" name="techs" action="listar">
+
+        <div class="row">
+
+            <div class="col-lg-4">
+                <div class="form-group">
+                    <label class="form-control-label">Cliente</label>
+                    <select id="slcCliente" name="slcCliente" class="form-control cliente">{empresas}</select>
+                    <input type="hidden" name="hidCliente" id="hidCliente" class="clihid">
+                </div>
+            </div>
+
+            <div class="col-lg-8">
+                <div class="form-group">
+                    <label class="form-control-label">Proyecto/Mina</label>
+                    <select id="slcProyecto" name="slcProyecto" class="form-control proyecto"></select>
+                    <input type="hidden" name="hidProyecto" id="hidProyecto" class="proyhid">
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row">
+
+          <div class="col-lg-3">
+            <div class="form-group">
+              <label class="form-control-label">Cédula</label>
+              <input type="text" id="txtCedula" name="txtCedula" placeholder="Cédula del técnico" class="form-control">
+            </div>
+          </div>
+
+          <div class="col-lg-6">
+            <div class="form-group">
+              <label class="form-control-label">Nombre</label>
+              <input type="text" id="txtNombres" name="txtNombres" placeholder="Nombre del técnico" class="form-control">
+            </div>
+          </div>
+
+          <div class="col-lg-3">
+            <div class="form-group">
+                <label class="form-control-label">Grupo</label>
+                <select id="slcGrupo" name="slcGrupo" class="form-control">{grupos}</select>
+            </div>
+          </div>
+
+        </div>
+
+      	<div class="row">
+
+          <div class="col-lg-3 offset-lg-9">
+            <div class="form-group">
+              <label class="form-control-label">Estado técnico</label>
+              <select id="slcEstado" name="slcEstado" class="form-control">{estados}</select>
+            </div>
+          </div>
+
+      	</div>
+
+      </form>
+
+    </div>
+
+    <div class="card-footer text-right">
+
+    	<button id="btnList" type="button" class="btn btn-info" target="table-cont">
+    		Buscar &nbsp;&nbsp;<i class="fa fa-search"></i>
+    	</button>
+
+    	&nbsp;&nbsp;
+
+    	<button id="btnNew" type="button" class="btn btn-success" target="module-cont">
+    		Nuevo &nbsp;&nbsp;<i class="fa fa-plus"></i>
+    	</button>
+
+    	&nbsp;&nbsp;
+
+    	<button id="btnCancel" type="button" class="btn btn-primary" action="clean-form" target="table-cont">
+          Limpiar &nbsp;&nbsp;<i class="fa fa-eraser"></i>
+      </button>
+
+    </div>
+  
+  </div>
+
+	<div class="card">
+
+		<div class="card-header d-flex align-items-center">
+			<h3 class="h4">Resultados</h3>
+		</div>
+
+		<div class="card-body">
+
+			<div id="table-cont" class="table-responsive" style="display: none;"></div>
+
+		</div>
+
+	</div>
+
+</div>
+
+{footer}

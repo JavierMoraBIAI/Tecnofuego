@@ -1,0 +1,383 @@
+<script type="text/javascript">
+
+	$(document).ready(function() {
+		renderDTParam('#tabEntrada');
+	});
+
+	// Combo dependiente de tipo de contrato a modelo de contrato
+    $(document).on('change','#slcHija',function(){
+
+		let cnf = {
+			model 	: 'lists',
+			method 	: 'padres',
+			params	: {
+				val	: $(this).val(), 
+				def : '',
+				typ : 'echo'
+			},
+			target	: 'slcPadre'
+		};
+
+		cmbdep(cnf);
+
+	});
+
+	// Agregar elemento a la lista
+	$(document).on('click','#btnAddList',function(){
+
+		let hijo = $('#slcHija').val();
+		let padr = $('#slcPadre').val();
+
+		if( hijo.length > 0 && padr.length > 0 ){
+
+			var params = {
+				'model'  : 'lists',
+				'method' : 'valfather',
+				'args'   : {
+					son	: hijo, 
+					val	: padr, 
+					def : '',
+					typ : 'echo'
+				}
+			};
+
+			$.ajax({
+				url: 'index.php',
+				type: 'POST',
+				dataType: 'html',
+				data: params,
+				cache: false, // Appends _={timestamp} to the request query string
+				success: function($dres) {
+					$('#slcValFath').html($dres);
+				}
+			}).done(function(){
+				$('#modValues').modal({
+					backdrop: 'static',
+					keyboard: false
+				});
+			});
+
+		} else {
+			let conf = {
+				'tarmsg'  : 'contMsg',
+				'tarow'   : 'rowMsg',
+				'msg'     : 'Elija la jerarquía que tiene el elemento'
+			};
+			alertCustom(conf);
+		}
+
+	});
+
+	// Guardar elemento en la lista
+	$(document).on('click','#btnSaveModVal',function(){
+
+		if( validateModal() ){
+
+			destroyTableParam('#tabEntrada');
+			
+			let lbl = $('#txtEtiqueta').val();
+			let fth = $('#slcValFath').val();
+			let fthl = $('#slcValFath option:selected').text();
+			let edo = $('#slcEdoVal').val();
+			let edol = $('#slcEdoVal option:selected').text();
+			let idtr = $('#hidIdTr').val();
+
+			if( idtr == '' ){
+				nuevaFila(lbl, fth, edo, fthl, edol);
+			} else {
+				editoFila(lbl, fth, edo, fthl, edol, idtr);
+			}
+
+			renderDTParam('#tabEntrada');
+			
+		} else {
+			let conf = {
+				'tarmsg'  : 'contMsgModal',
+				'tarow'   : 'rowMsgModal',
+				'msg'     : 'Hay campos obligatorios sin diligenciar.'
+			};
+			alertCustom(conf);
+		}
+
+	});
+
+	// Editar valor detalle
+    $(document).on('click','.edit-dty',function(){
+		$('#btnAddList').click();
+		let idtr = $(this).attr('idfila');
+		$('#txtEtiqueta').val( $('#tr'+idtr).find('td:eq(0)').text() );
+		$('#slcEdoVal').val($('#tr'+idtr).find('td:eq(2) input:hidden').val());
+		$('#hidIdTr').val(idtr);
+		setTimeout(function(){ 
+			$('#slcValFath').val($('#tr'+idtr).find('td:eq(1) input:hidden').val());
+		}, 500);
+	});
+
+	// Eliminar valor detalle
+    $(document).on('click','.dele-dty',function(){
+    	if( confirm('¿Desea eliminar este valor de la lista?') ){
+    		$('#tr'+$(this).attr('idfila')).remove();
+    		readTable();
+    	}    	
+    });
+
+	// Cancelar ventana modal
+	$(document).on('click','#btnCancelModVal',function(){
+		$('#frmModalVals').clearForm();
+	});
+
+	var fila = 0;
+
+	function nuevaFila(lbl, fth, edo, fthl, edol){
+
+		var btns = '<button class="btn btn-info btn-sm edit-dty" type="button" idfila="'+fila+'"><i class="fa fa-pencil"></i></button>&nbsp;&nbsp;';
+		btns += '<button class="btn btn-danger btn-sm dele-dty" type="button" idfila="'+fila+'"><i class="fa fa-times"></i></button>';
+
+		var tr = '<tr id="tr'+fila+'">';
+			tr += '<td>'+lbl+'</td>';
+			tr += '<td class="text-center"><input type="hidden" name="hidFath'+fila+'" id="hidFath'+fila+'" value="'+fth+'">'+fthl+'</td>';
+			tr += '<td class="text-center"><input type="hidden" name="hidEdo'+fila+'" id="hidEdo'+fila+'" value="'+edo+'">'+edol+'</td>';
+			tr += '<td class="text-center">'+btns+'</td>';
+		tr += '</tr>';
+
+		$('#dtValores').append(tr);
+		fila++;
+		$('#btnCancelModVal').click();
+		readTable();
+
+	}
+
+	function editoFila(lbl, fth, edo, fthl, edol, idtr){
+		$('#tr'+idtr).find('td:eq(0)').text($('#txtEtiqueta').val());
+
+		let fath = '<input type="hidden" name="hidFath'+idtr+'" id="hidFath'+idtr+'" value="'+$('#slcValFath').val()+'">';
+		fath += $('#slcValFath option:selected').text();
+		$('#tr'+idtr).find('td:eq(1)').html(fath);
+		
+		let edov = '<input type="hidden" name="hidEdo'+idtr+'" id="hidEdo'+idtr+'" value="'+$('#slcEdoVal').val()+'">';
+		edov += $('#slcEdoVal option:selected').text();
+		$('#tr'+idtr).find('td:eq(2)').html(edov);
+
+		readTable();
+		$('#btnCancelModVal').click();
+	}
+
+	function readTable(){
+
+		var vals = [];
+
+		$("#dtValores tr").each(function(i) {
+			vals.push({ 
+				'lbl':$(this).find('td:eq(0)').text(), 
+				'fth':$(this).find('td:eq(1) input:hidden').val(), 
+				'edo':$(this).find('td:eq(2) input:hidden').val()
+			});
+			$('#hidIdDty').val(JSON.stringify(vals));
+			console.log(vals);
+		});
+
+	}
+
+	function validateModal(){
+
+		let lbl = $('#txtEtiqueta').val();
+		let fth = $('#slcValFath').val();
+		let edo = $('#slcEdoVal').val();
+		let sta = false;
+
+		if( lbl.length > 0 && fth.length > 0 && edo.length > 0 ){
+			sta = true;
+		} else {
+			sta = false;
+		}
+
+		return sta;
+
+	}
+
+</script>
+
+{header}
+
+<br>
+
+<div class="col-lg-12">
+
+	<div class="card">
+
+		<div class="card-header d-flex align-items-center">
+			<h3 class="h4">Nueva lista</h3>
+		</div>
+
+		<div class="card-body">
+
+			<p>Los campos marcados con asterisco <b class="text-danger">*</b> son <b class="text-danger">requeridos</b> </p>
+
+			<div id="rowMsg" class="row hidden-row">
+				<div class="col-lg-12">
+					<div id="contMsg" class="alert alert-danger"></div>
+				</div>
+			</div>
+
+			<form id="lists" name="lists" action="guardar">
+
+				<input type="hidden" id="hidId" name="hidId" value="">
+				<input type="hidden" id="hidIdDty" name="hidIdDty" value="">
+				
+				<div class="row">
+
+		          <div class="col-lg-8">
+		            <div class="form-group">
+		              <label class="form-control-label">Nombre lista <span class="text-danger">*</span></label>
+		              <input type="text" id="txtNombre" name="txtNombre" placeholder="Nombre de la lista" class="form-control" required="">
+		            </div>
+		          </div>
+
+		          <div class="col-lg-4">
+		            <div class="form-group">
+		              <label class="form-control-label">¿Es lista hija? <span class="text-danger">*</span></label>
+		              <select id="slcHija" name="slcHija" class="form-control" required="">{hijo}</select>
+		            </div>
+		          </div>
+
+				  </div>
+				  
+				  <div class="row">
+
+					<div class="col-lg-4 offset-lg-3">
+						<div class="form-group">
+							<label class="form-control-label">Lista padre <span class="text-danger">*</span></label>
+							<select id="slcPadre" name="slcPadre" class="form-control" required=""></select>
+						</div>
+					</div>
+
+					<div class="col-lg-4">
+						<div class="form-group">
+							<label class="form-control-label">Estado lista <span class="text-danger">*</span></label>
+							<select id="slcEstado" name="slcEstado" class="form-control" required="">{estados}</select>
+						</div>
+					</div>
+
+					<div class="col-lg-1 text-right">
+							<label class="form-control-label">&nbsp;</label>
+						<button id="btnAddList" type="button" class="btn btn-success form-control" title="Agregar elemento a la lista">
+							<i class="fa fa-plus"></i>
+						</button>
+					</div>
+
+				  </div>
+
+				  <br>
+
+				  <div class="row">
+					  <div class="col-lg-12">
+						  <h5>Elementos de la lista</h5>
+					  </div>
+				  </div>
+
+				  <br>
+
+				<div class="row">
+					<div class="col-lg-12">
+						<table id="tabEntrada" align="center" class="table table-hover table-striped newrone-table">
+							<thead>
+								<tr>
+									<th class="text-center">ETIQUETA</th>
+									<th class="text-center">VALOR PADRE</th>
+									<th class="text-center">ESTADO</th>
+									<th class="text-center">ACCIONES</th>
+								</tr>
+							</thead>
+							<tbody id="dtValores"></tbody>
+						</table>
+					</div>
+				</div>
+
+		      	<br>
+
+			</form>
+
+		</div>
+
+		<div class="card-footer text-right">
+
+			<button id="btnSave" type="button" class="btn btn-success" model="lists" method="guardar" form="0" target="module-cont">
+				Guardar &nbsp;&nbsp;<i class="fa fa-save"></i>
+			</button>
+
+			&nbsp;&nbsp;
+
+			<button id="btnCancel" type="button" class="btn btn-danger" action="back" modbak="index" target="module-cont">
+				Cancelar &nbsp;&nbsp;<i class="fa fa-times"></i>
+			</button>
+
+		</div>
+
+	</div>
+
+</div>
+
+{footer}
+
+<!-- Modal -->
+<div class="modal fade" id="modValues" tabindex="-1" role="dialog" aria-labelledby="modValuesLabel" aria-hidden="true">
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content">
+		<div class="modal-header">
+			<h5 class="modal-title" id="modValuesLabel">Agregar valor a la lista</h5>
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+			</button>
+		</div>
+		<div class="modal-body">
+
+			<div id="rowMsgModal" class="row hidden-row">
+				<div class="col-lg-12">
+					<div id="contMsgModal" class="alert alert-danger"></div>
+				</div>
+			</div>
+
+			<form id="frmModalVals" name="frmModalVals">
+			
+				<div class="row">
+
+					<div class="col-lg-6">
+						<div class="form-group">
+							<label class="form-control-label">Etiqueta <span class="text-danger">*</span></label>
+							<input type="hidden" id="hidIdTr" name="hidIdTr">
+							<input type="text" id="txtEtiqueta" name="txtEtiqueta" placeholder="Etiqueta de valor" class="form-control">
+						</div>
+					</div>
+
+					<div class="col-lg-6">
+						<div class="form-group">
+							<label class="form-control-label">Valor padre <span class="text-danger">*</span></label>
+							<select id="slcValFath" name="slcValFath" class="form-control"></select>
+						</div>
+					</div>
+
+				</div>
+
+				<div class="row">
+					<div class="col-lg-4 offset-lg-8">
+						<div class="form-group">
+							<label class="form-control-label">Estado valor <span class="text-danger">*</span></label>
+							<select id="slcEdoVal" name="slcEdoVal" class="form-control">{estados}</select>
+						</div>
+					</div>
+				</div>
+
+			</form>
+
+		</div>
+		<div class="modal-footer">
+			<button id="btnCancelModVal" type="button" class="btn btn-danger" data-dismiss="modal">
+				Cerrar &nbsp;&nbsp;<i class="fa fa-times"></i>
+			</button>
+			<button id="btnSaveModVal" type="button" class="btn btn-success">
+				Guardar &nbsp;&nbsp;<i class="fa fa-save"></i>
+			</button>
+		</div>
+		</div>
+	</div>
+</div>

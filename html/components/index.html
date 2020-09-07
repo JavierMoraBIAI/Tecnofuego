@@ -1,0 +1,154 @@
+<script type="text/javascript">
+	
+	$(document).on('change','#slcCliente',function(){
+
+    	let cnf = {
+    		model 	: 'components',
+    		method 	: 'sitios',
+    		params	: {
+    			val	: $(this).val(), 
+    			def : '',
+    			typ : 'echo'
+    		},
+    		target	: 'slcProyecto'
+    	};
+
+    	cmbdep(cnf);
+
+    });
+
+</script>
+
+{header}
+
+<br>
+
+<div class="col-lg-12">
+
+  <div class="card">
+
+    <div class="card-header d-flex align-items-center">
+      <h3 class="h4">Listar componentes</h3>
+    </div>
+    
+    <div class="card-body">
+      
+      <form id="components" name="components" action="listar">
+
+        <div class="row">
+
+          <div class="col-lg-4">
+            <div class="form-group">
+              <label class="form-control-label">Cliente</label>
+              <select id="slcCliente" name="slcCliente" class="form-control cliente">{empresas}</select>
+              <input type="hidden" name="hidCliente" id="hidCliente" class="clihid">
+            </div>
+          </div>
+  
+          <div class="col-lg-8">
+            <div class="form-group">
+              <label class="form-control-label">Proyecto/Mina</label>
+              <select id="slcProyecto" name="slcProyecto" class="form-control proyecto"></select>
+              <input type="hidden" name="hidProyecto" id="hidProyecto" class="proyhid">
+            </div>
+          </div>
+  
+        </div>
+
+        <div class="row">
+
+          <div class="col-lg-4">
+            <div class="form-group">
+              <label class="form-control-label">Tipo de sistema</label>
+              <select id="slcTySys" name="slcTySys" class="form-control">{sistemas}</select>
+            </div>
+          </div>
+
+          <div class="col-lg-4">
+            <div class="form-group">
+              <label class="form-control-label">Familia</label>
+              <select id="slcFamilia" name="slcFamilia" class="form-control">{familias}</select>
+            </div>
+          </div>
+
+          <div class="col-lg-4">
+            <div class="form-group">
+              <label class="form-control-label">Parte Número</label>
+              <input type="text" id="txtNumParte" name="txtNumParte" placeholder="Número de parte" class="form-control">
+            </div>
+          </div>
+
+        </div>
+
+      	<div class="row">
+
+          <div class="col-lg-8">
+            <div class="form-group">
+              <label class="form-control-label">Nombre componente</label>
+              <input type="text" id="txtNombre" name="txtNombre" placeholder="Nombre del componente" class="form-control">
+            </div>
+          </div>
+
+          <div class="col-lg-4">
+            <div class="form-group">
+              <label class="form-control-label">Categoría</label>
+              <select id="slcCategoria" name="slcCategoria" class="form-control">{categs}</select>
+            </div>
+          </div>
+
+        </div>
+        
+        <div class="row">
+
+          <div class="col-lg-4 offset-lg-8">
+            <div class="form-group">
+              <label class="form-control-label">Estado componente</label>
+              <select id="slcEstado" name="slcEstado" class="form-control">{estados}</select>
+            </div>
+          </div>
+
+        </div>
+
+      </form>
+
+    </div>
+
+    <div class="card-footer text-right">
+
+    	<button id="btnList" type="button" class="btn btn-info" target="table-cont">
+    		Buscar &nbsp;&nbsp;<i class="fa fa-search"></i>
+    	</button>
+
+    	&nbsp;&nbsp;
+
+    	<button id="btnNew" type="button" class="btn btn-success" target="module-cont">
+    		Nuevo &nbsp;&nbsp;<i class="fa fa-plus"></i>
+    	</button>
+
+    	&nbsp;&nbsp;
+
+    	<button id="btnCancel" type="button" class="btn btn-primary" action="clean-form" target="table-cont">
+          Limpiar &nbsp;&nbsp;<i class="fa fa-eraser"></i>
+      </button>
+
+    </div>
+  
+  </div>
+
+	<div class="card">
+
+		<div class="card-header d-flex align-items-center">
+			<h3 class="h4">Resultados</h3>
+		</div>
+
+		<div class="card-body">
+
+			<div id="table-cont" class="table-responsive" style="display: none;"></div>
+
+		</div>
+
+	</div>
+
+</div>
+
+{footer}
