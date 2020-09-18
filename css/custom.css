@@ -1,0 +1,189 @@
+/* Login */
+.soporte-cont {
+	background-color: #ffffff;
+	margin-top: 10%;
+}
+
+.copytext {
+	font-size: 12px;
+}
+
+.text-note {
+	font-size: 0.9em;
+}
+
+/* User card */
+.ava-pic {
+	margin: 5% 15% 5% 15%; /* trouble */
+}
+
+.ava-thepic {
+	width: 50%;
+}
+
+.usname {
+	color: #333333;
+	font-size: 0.95em;
+	text-align: center;
+}
+
+.text-proy {
+	color: #999999;
+}
+
+.text-cargo {
+	font-size: 0.85em;
+}
+
+/* your styles go here */
+.addon-field {
+	padding: 27% 0% 22% 10% !important; /* trouble */
+}
+
+.canti {
+	font-size: 200%;
+}
+
+.icn-btn {
+	padding-top: 3px;
+}
+
+.data-dty {
+	background-color: #AFEAAA;
+	border: 1px solid #379392;
+	font-size: 0.85em;
+	padding: 2px 9px 0px 6px;
+	width: 100%;
+}
+
+.img-logo {
+	/*height: 5% !important;*/
+	margin: -10% 0 1% 0 1%;
+	width: 3%;
+}
+
+.left-arrow {
+	color: #333333 !important;
+	font-size: 1.5em !important;
+}
+
+.row-nospace {
+	margin-bottom: -1.4% !important;
+}
+
+.ansul-slogan {
+	font-size: 0.8em;
+	margin-top: -4%;
+}
+
+.img-ansul {
+	margin: -35% 0 0 0;
+}
+
+.hidden-row {
+	display: none;
+}
+
+.custom-file {
+	margin-top: 3.4%;
+}
+
+/* Distribución boxes dashboard */
+.contenedor {
+	margin: 0 0 0 -3.2%;
+	width: 100%;
+}
+.contenido {
+	width: 20%;
+	float: left;
+	margin: 0px;
+}
+
+/* Estilos dashboard */
+.text-foot-dash {
+	color: #999;
+	font-size: 0.7em;
+	font-weight: 600;
+}
+
+.title-dash {
+	font-size: 2.5em;
+}
+
+.dash-title {
+	font-size: 0.85em;
+	font-weight: 600;
+}
+
+.dash-icon-cont {
+	padding: 12% 0 0 25%; /* trouble */
+}
+
+ /* Colores del texto en el Dashboard */
+ .blue-text-icon {
+	background-color: #0170BA;
+	border-radius: 100px;
+	color: #ffffff;
+	padding: 12px 5px 12px 8px;
+	width: 75%;
+ }
+
+ .title-dash-blue {
+	color: #0170BA;	 
+ }
+
+ .dark-blue-text-icon {
+	background-color: #242961;
+	border-radius: 100px;
+	color: #ffffff;
+	padding: 12px 5px 12px 9px;
+	width: 75%;
+ }
+
+ .title-dash-dark-blue {
+	color: #242961;	 
+ }
+
+ .dark-gray-text-icon {
+	background-color: #2F2F2F;
+	border-radius: 100px;
+	color: #ffffff;
+	padding: 12px 5px 12px 9px;
+	width: 75%;
+ }
+
+ .title-dash-dark-gray {
+	color: #2F2F2F;	 
+ }
+
+ .red-text-icon {
+	background-color: #EF2001;
+	border-radius: 100px;
+	color: #ffffff;
+	padding: 12px 5px 12px 8px;
+	width: 75%;
+ }
+
+ .title-dash-red {
+	color: #EF2001;	 
+ }
+
+ .logo-qlik {
+	/*height: 5% !important;*/
+	width: 5% !important;
+}
+
+.bg-custom-ac {
+	background-color: #EEF5F9;
+	color: #666666 !important;
+	padding: 0 0 0 0 !important;
+}
+
+/* Centrar lupa de búsqueda ventanas emergentes */
+.lupa-btn {
+	padding: 0 !important;
+}
+
+.center-lupa {
+	margin: 0 0 0 -2% !important;
+}

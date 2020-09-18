@@ -1,0 +1,257 @@
+<script type="text/javascript">
+	
+	$(document).on('change','#slcCliente',function(){
+
+    	let cnf = {
+    		model 	: 'components',
+    		method 	: 'sitios',
+    		params	: {
+    			val	: $(this).val(), 
+    			def : '',
+    			typ : 'echo'
+    		},
+    		target	: 'slcProyecto'
+    	};
+
+    	cmbdep(cnf);
+
+	});
+	
+	$(document).on('change','#slcCategoria',function(){
+
+		let cnf = {
+    		model 	: 'components',
+    		method 	: 'compos',
+    		params	: {
+    			val	: $(this).val(), 
+    			fam	: $('#slcFamilia').val(), 
+    			def : '',
+    			typ : 'echo'
+    		},
+    		target	: 'slcComponente'
+    	};
+
+    	cmbdep(cnf);
+
+	});
+
+	$(document).on('change','#slcComponente',function(){
+
+		var params = {
+			'model'  : 'components',
+			'method' : 'control',
+			'args'   : $(this).val()
+		};
+
+		$.ajax({
+			url: 'index.php',
+			type: 'POST',
+			dataType: 'html',
+			data: params,
+			cache: false, // Appends _={timestamp} to the request query string
+			success: function($dres) {
+				$('#fboxes').html($dres);
+			}
+		}).done(function() {
+
+			let flds = '';
+			
+			$(".ctrl-fld").each(function(i) {
+				flds += $(this).attr('id')+',';
+			});
+
+			$('#hidCtrlFdls').val(flds);
+			
+		});
+
+	});
+
+	// Verificar la existencia de seriales o consecutivos
+	$(document).on('blur','input[idfi=31], input[idfi=34]',function(){
+
+		let idfi = parseInt($(this).attr('idfi')), valu = $(this).val(), proy = '', elem = '', comp = $('#slcComponente').val();
+
+		switch(idfi){
+
+			case 31: 
+				proy = $('#slcProyecto').val(); 
+				elem = 'consecutivo';
+			break;
+
+			case 34: 
+				proy = ''; 
+				elem = 'serial';
+			break;
+
+		}
+
+		var params = {
+			'model'  : 'components',
+			'method' : 'vercods',
+			'args'   : {
+				'idfi' : idfi,
+				'valu' : valu,
+				'comp' : comp,
+				'proy' : proy
+			}
+		};
+
+		$.ajax({
+			url: 'index.php',
+			type: 'POST',
+			dataType: 'text',
+			data: params,
+			cache: false, // Appends _={timestamp} to the request query string
+			success: function($dres) {
+				console.log($dres);
+				if( parseInt($dres) >= 1 ){
+
+					let conf = {
+                        'tarmsg'  : 'contMsg',
+                        'tarow'   : 'rowMsg',
+                        'msg'     : 'Este '+elem+' ya existe en la base de datos. Por favor verifique la información ingresada.'
+                    };
+
+                    alertCustom(conf);
+
+					$("#btnSave").addClass('disabled');
+					$('#btnSave').prop('disabled', true);
+					
+				} else {
+					$("#btnSave").removeClass('disabled');
+                    $('#btnSave').prop('disabled', false);
+				}
+			}
+		});
+
+	});
+
+</script>
+
+{header}
+
+<br>
+
+<div class="col-lg-12">
+
+	<div class="card">
+
+		<div class="card-header d-flex align-items-center">
+			<h3 class="h4">Nuevo componente</h3>
+		</div>
+
+		<div class="card-body">
+
+			<p>Los campos marcados con asterisco <b class="text-danger">*</b> son <b class="text-danger">requeridos</b> </p>
+
+			<div id="rowMsg" class="row hidden-row">
+				<div class="col-lg-12">
+					<div id="contMsg" class="alert alert-danger"></div>
+				</div>
+			</div>
+
+			<form id="components" name="components" action="guardar">
+
+				<input type="hidden" id="hidId" name="hidId" value="">
+				<input type="hidden" name="hidCtrlFdls" id="hidCtrlFdls" value="">
+
+				<div class="row">
+
+					<div class="col-lg-4">
+						<div class="form-group">
+						<label class="form-control-label">Cliente <span class="text-danger">*</span></label>
+						<select id="slcCliente" name="slcCliente" class="form-control cliente" required>{empresas}</select>
+						<input type="hidden" name="hidCliente" id="hidCliente" class="clihid">
+						</div>
+					</div>
+			
+					<div class="col-lg-8">
+						<div class="form-group">
+						<label class="form-control-label">Proyecto/Mina <span class="text-danger">*</span></label>
+						<select id="slcProyecto" name="slcProyecto" class="form-control proyecto"required></select>
+						<input type="hidden" name="hidProyecto" id="hidProyecto" class="proyhid">
+						</div>
+					</div>
+			
+				</div>
+
+				<div class="row">
+
+					<div class="col-lg-4">
+						<div class="form-group">
+							<label class="form-control-label">Tipo de sistema <span class="text-danger">*</span></label>
+							<select id="slcTySys" name="slcTySys" class="form-control" required>{sistemas}</select>
+						</div>
+					</div>
+			
+					<div class="col-lg-4">
+						<div class="form-group">
+							<label class="form-control-label">Familia <span class="text-danger">*</span></label>
+							<select id="slcFamilia" name="slcFamilia" class="form-control" required>{familias}</select>
+						</div>
+					</div>
+
+					<div class="col-lg-4">
+						<div class="form-group">
+							<label class="form-control-label">Categoría <span class="text-danger">*</span></label>
+							<select id="slcCategoria" name="slcCategoria" class="form-control" required>{categs}</select>
+						</div>
+					</div>
+
+				</div>
+
+				<div class="row">
+
+					<div class="col-lg-8">
+						<div class="form-group">
+							<label class="form-control-label">Componente <span class="text-danger">*</span></label>
+							<select id="slcComponente" name="slcComponente" class="form-control" required></select>
+						</div>
+					</div>
+
+					<div class="col-lg-4">
+						<div class="form-group">
+							<label class="form-control-label">Estado componente <span class="text-danger">*</span></label>
+							<select id="slcEstado" name="slcEstado" class="form-control" required>{estados}</select>
+						</div>
+					</div>
+
+				</div>
+
+				<br>
+
+				<div class="row">
+					<div class="col-lg-4">
+						<h4>Campos de control</h4>
+					</div>
+				</div>
+
+				<br>
+
+				<div id="fboxes" class="row"></div>
+
+		      	<br>
+
+			</form>
+
+		</div>
+
+		<div class="card-footer text-right">
+
+			<button id="btnSave" type="button" class="btn btn-success" model="components" method="guardar" form="0" target="module-cont">
+				Guardar &nbsp;&nbsp;<i class="fa fa-save"></i>
+			</button>
+
+			&nbsp;&nbsp;
+
+			<button id="btnCancel" type="button" class="btn btn-danger" action="back" modbak="index" target="module-cont">
+				Cancelar &nbsp;&nbsp;<i class="fa fa-times"></i>
+			</button>
+
+		</div>
+
+	</div>
+
+</div>
+
+{footer}

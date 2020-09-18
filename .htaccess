@@ -1,0 +1,19 @@
+options -indexes
+RewriteEngine On
+RewriteRule ^(.*)\.css$ $1.css [QSA,L]
+RewriteRule ^(.*)\.png$ $1.png [QSA,L]
+RewriteRule ^(.*)\.jpg$ $1.jpg [QSA,L]
+RewriteRule ^(.*)\.otf$ $1.otf [QSA,L]
+RewriteRule ^(.*)\.eot$ $1.eot [QSA,L]
+RewriteRule ^(.*)\.svg$ $1.svg [QSA,L]
+RewriteRule ^(.*)\.ttf$ $1.ttf [QSA,L]
+RewriteRule ^(.*)\.woff$ $1.woff [QSA,L]
+RewriteRule ^(.*)\.woff2$ $1.woff2 [QSA,L]
+RewriteRule ^(.*)\.js$ $1.js [QSA,L]
+RewriteRule ^(.*)\.html$ $1.html [QSA,L]
+RewriteRule ^(.*)\.json$ $1.json [QSA,L]
+RewriteRule ^(.*)\.csv$ $1.csv [QSA,L]
+# RewriteRule ^([^/]*)$ index.php?model=$1&method=index [QSA,L]
+RewriteRule ^([^/]*)/([^/]*)$ index.php?model=$1&method=$2 [QSA,L]
+RewriteRule ^([^/]*)/([^/]*)/([^/]*)$ index.php?model=$1&method=$2&args=$3 [QSA,L]
+DirectoryIndex index.php?model=inicio&method=index

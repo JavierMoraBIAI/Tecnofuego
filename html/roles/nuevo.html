@@ -1,0 +1,230 @@
+<script type="text/javascript">
+
+	var opcs = [];
+	var crea = [];
+	var modi = [];
+	var stat = [];
+	$(document).off('click', '.chk-ver');
+	$(document).off('click', '.chk-cre');
+	$(document).off('click', '.chk-mod');
+	$(document).off('click', '.chk-del');
+
+	$(document).on('click','.chk-ver',function(){
+
+		if( $('#hidOpciones').val() == '' ){
+			opcs = [];
+		}
+
+		let elem = $(this), valor = elem.val(), index = opcs.toString().split(",").indexOf(valor);
+
+		if( elem.prop('checked') ) {			
+			if (index == -1) {
+				opcs.push(valor);
+			} else {
+				opcs.splice(index, 1);	            	
+			}
+		} else {
+			if (index > -1) {
+				opcs.splice(index, 1);
+			} else {
+				opcs.push(valor);
+			}
+		}
+
+		$('#hidOpciones').val(opcs.toString());
+
+	});
+
+	$(document).on('click','.chk-cre',function(){
+
+		if( $('#hidOpcsCrear').val() == '' ){
+			crea = [];
+		}
+
+		let elem = $(this), valor = elem.val(), index = crea.toString().split(",").indexOf(valor);
+
+		if( elem.prop('checked') ) {			
+			if (index == -1) {
+				crea.push(valor);
+			} else {
+				crea.splice(index, 1);	            	
+			}
+		} else {
+			if (index > -1) {
+				crea.splice(index, 1);
+			} else {
+				crea.push(valor);
+			}
+		}
+
+		$('#hidOpcsCrear').val(crea.toString());
+
+	});
+
+	$(document).on('click','.chk-mod',function(){
+
+		if( $('#hidOpcsModif').val() == '' ){
+			modi = [];
+		}
+
+		let elem = $(this), valor = elem.val(), index = modi.toString().split(",").indexOf(valor);
+
+		if( elem.prop('checked') ) {			
+			if (index == -1) {
+				modi.push(valor);
+			} else {
+				modi.splice(index, 1);	            	
+			}
+		} else {
+			if (index > -1) {
+				modi.splice(index, 1);
+			} else {
+				modi.push(valor);
+			}
+		}
+
+		$('#hidOpcsModif').val(modi.toString());
+
+	});
+
+	$(document).on('click','.chk-del',function(){
+
+		if( $('#hidOpcsstatu').val() == '' ){
+			stat = [];
+		}
+
+		let elem = $(this), valor = elem.val(), index = stat.toString().split(",").indexOf(valor);
+
+		if( elem.prop('checked') ) {			
+			if (index == -1) {
+				stat.push(valor);
+			} else {
+				stat.splice(index, 1);	            	
+			}
+		} else {
+			if (index > -1) {
+				stat.splice(index, 1);
+			} else {
+				stat.push(valor);
+			}
+		}
+
+		$('#hidOpcsstatu').val(stat.toString());
+
+	});
+
+</script>
+
+{header}
+
+<br>
+
+<div class="col-lg-12">
+
+	<div class="card">
+
+		<div class="card-header d-flex align-items-center">
+			<h3 class="h4">Nuevo rol</h3>
+		</div>
+
+		<div class="card-body">
+
+			<p>Los campos marcados con asterisco <b class="text-danger">*</b> son <b class="text-danger">requeridos</b> </p>
+
+			<div id="rowMsg" class="row hidden-row">
+				<div class="col-lg-12">
+					<div id="contMsg" class="alert alert-danger"></div>
+				</div>
+			</div>
+
+			<form id="roles" name="roles" action="guardar">
+
+				<input type="hidden" id="hidId" name="hidId" value="">
+
+				<input type="hidden" id="hidOpciones" name="hidOpciones" value="">
+				<input type="hidden" id="hidOpcsCrear" name="hidOpcsCrear" value="">
+				<input type="hidden" id="hidOpcsModif" name="hidOpcsModif" value="">
+				<input type="hidden" id="hidOpcsstatu" name="hidOpcsstatu" value="">
+				
+				<div class="row">
+
+		          <div class="col-lg-8">
+		            <div class="form-group">
+		              <label class="form-control-label">Nombre rol <span class="text-danger">*</span></label>
+		              <input type="text" id="txtRole" name="txtRole" placeholder="Nombre del rol" class="form-control" required="">
+		            </div>
+		          </div>
+
+		          <div class="col-lg-4">
+		            <div class="form-group">
+		              <label class="form-control-label">Estado rol <span class="text-danger">*</span></label>
+		              <select id="slcEstado" name="slcEstado" class="form-control" required="">{estados}</select>
+		            </div>
+		          </div>
+
+		      	</div>
+
+		      	<br>
+
+				<div class="row">
+					<div class="col-lg-12">
+						<h5>Opciones del rol</h5>
+					</div>
+				</div>
+
+				<br>
+
+				<div class="row">
+					<div class="col-lg-12">
+
+						<table class="table table-hover table-striped newrone-table">
+							<thead>
+								<tr>
+									<th width="52%">
+										Opción
+									</th>
+									<th class="text-center" width="12%">
+										Ver
+									</th>
+									<th class="text-center" width="12%">
+										Crear
+									</th>
+									<th class="text-center" width="12%">
+										Modificar
+									</th>
+									<th class="text-center" width="12%">
+										Eliminar/Status
+									</th>
+								</tr>
+							</thead>
+							<tbody>{opciones}</tbody>
+						</table>
+
+					</div>
+				</div>
+
+				<br>
+
+			</form>
+
+		</div>
+
+		<div class="card-footer text-right">
+
+			<button id="btnSave" type="button" class="btn btn-success" model="roles" method="guardar" form="0" target="module-cont">
+				Guardar &nbsp;&nbsp;<i class="fa fa-save"></i>
+			</button>
+
+			&nbsp;&nbsp;
+
+			<button id="btnCancel" type="button" class="btn btn-danger" action="back" modbak="index" target="module-cont">
+				Cancelar &nbsp;&nbsp;<i class="fa fa-times"></i>
+			</button>
+
+		</div>
+
+	</div>
+
+</div>
+
+{footer}

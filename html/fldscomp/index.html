@@ -1,0 +1,214 @@
+<script type="text/javascript">
+
+  var target = '#table-cont';
+
+  $(document).on('change','#slcTipoComp',function(){
+
+    if( $(this).val().length > 0 ){
+      refreshTable();
+    } else {
+      $(target).html('').fadeOut('slow');
+      $(target).css('display','none');
+    }
+
+    cleanFields();
+
+  });
+
+  $(document).on('click','#btnSaveCamp',function(){
+
+    if( valReq() ){
+
+      var $zonaf = new FormData();
+
+      $zonaf.append('model',$(this).attr('model'));
+      $zonaf.append('method',$(this).attr('method'));
+      $zonaf.append('args',JSON.stringify($('#'+$(this).attr('model')).formToObject()));
+
+      $.ajax({
+        url: 'index.php',
+        type: 'POST',
+        dataType: 'json',
+        data: $zonaf,
+        cache: false, // Appends _={timestamp} to the request query string
+        contentType: false,
+        processData: false,
+        success: function($dres) {
+
+          if( $dres.res == 'OK' ){
+            cleanFields();
+            $('#txtNombre').focus();
+            refreshTable(target);
+          }
+
+          alert($dres.msg);
+          
+        }
+      });
+
+    } else {
+      alert('Debe llenar todos los campos marcados como obligatorios (asterisco * rojo) para poder guardar');
+    }
+
+  });
+
+  // Acciones boton elegir registro para editar
+  $(document).on('click','a[action=updsame]',function(e){
+
+    e.preventDefault();
+
+    var params = {
+      'model'   :   'fldscomp',
+      'method'  :   $(this).attr('href'),
+      'args'    :   $(this).parent().parent().find('td:eq(0)').text()
+    };
+
+    $.ajax({
+      url: 'index.php',
+      type: 'POST',
+      dataType: 'json',
+      data: params,
+      cache: false, // Appends _={timestamp} to the request query string
+      success: function($dres) {        
+        $('#hidId').val($dres.id);
+        $('#txtNombre').val($dres.name);
+        $('#slcTipoCamp').val($dres.tipo);
+        $('#slcEstado').val($dres.edo_reg);
+        $('#txtNombre').focus();
+      }
+    });
+
+  });
+
+  $(document).on('click','#btnCancelCamp',function(){
+    cleanFields();
+  });
+
+  function cleanFields(){
+    $('#txtNombre').val('');
+    $('#slcTipoCamp').val('');
+    $('#slcEstado').val('');
+  }
+
+  function refreshTable(){
+
+    let tyeq = $('#slcTipoComp').val();
+
+    let params = {
+        'model'  : 'fldscomp',
+        'method' : 'listar',
+        'args'   : tyeq
+    };
+
+    $.ajax({
+      url: 'index.php',
+      type: 'POST',
+      dataType: 'html',
+      data: params,
+      cache: false, // Appends _={timestamp} to the request query string
+      beforeSend: function(){
+        $(target).html(loader).fadeIn('slow');
+      },
+      success: function($dres) {
+        $(target).html($dres);            
+        renderDT();
+      }
+    }).done(function() {
+      $(target).fadeIn('slow');
+    });
+
+  }
+  
+</script>
+
+{header}
+
+<br>
+
+<div class="col-lg-12">
+
+  <div class="card">
+
+    <div class="card-header d-flex align-items-center">
+      <h3 class="h4">Información del campo</h3>
+    </div>
+    
+    <div class="card-body">
+      
+      <form id="fldscomp" name="fldscomp">
+
+        <input type="hidden" id="hidId" name="hidId" value="">
+
+      	<div class="row">
+
+          <div class="col-lg-4">
+            <div class="form-group">
+              <label class="form-control-label">Tipos de componente <span class="text-danger">*</span></label>
+              <select id="slcTipoComp" name="slcTipoComp" class="form-control" required="">{componentes}</select>
+            </div>
+          </div>
+
+          <div class="col-lg-8">
+            <div class="form-group">
+              <label class="form-control-label">Nombre del campo <span class="text-danger">*</span></label>
+              <input type="text" id="txtNombre" name="txtNombre" placeholder="Nombre del campo" class="form-control" value="" required="">
+            </div>
+          </div>
+
+        </div>
+        
+        <div class="row">
+
+          <div class="col-lg-4 offset-lg-4">
+            <div class="form-group">
+              <label class="form-control-label">Tipos de campo <span class="text-danger">*</span></label>
+              <select id="slcTipoCamp" name="slcTipoCamp" class="form-control" required="">{typfld}</select>
+            </div>
+          </div>
+  
+          <div class="col-lg-4">
+            <div class="form-group">
+              <label class="form-control-label">Estado campo <span class="text-danger">*</span></label>
+              <select id="slcEstado" name="slcEstado" class="form-control" required="">{estados}</select>
+            </div>
+          </div>
+
+        </div>
+
+      </form>
+
+    </div>
+
+    <div class="card-footer text-right">
+
+    	<button id="btnSaveCamp" type="button" class="btn btn-success" target="table-cont" model="fldscomp" method="guardar">
+    		Guardar &nbsp;&nbsp;<i class="fa fa-save"></i>
+    	</button>
+
+    	&nbsp;&nbsp;
+
+    	<button id="btnCancelCamp" type="button" class="btn btn-danger" action="clean-form">
+    		Cancelar &nbsp;&nbsp;<i class="fa fa-times"></i>
+    	</button>
+
+    </div>
+  
+  </div>
+
+	<div class="card">
+
+		<div class="card-header d-flex align-items-center">
+			<h3 class="h4">Resultados</h3>
+		</div>
+
+		<div class="card-body">
+
+			<div id="table-cont" class="table-responsive" style="display: none;"></div>
+
+		</div>
+
+	</div>
+
+</div>
+
+{footer}

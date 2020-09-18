@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>{title}</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="robots" content="all,follow">
+    <!-- Bootstrap CSS-->
+    <link rel="stylesheet" href="../../vendor/bootstrap/css/bootstrap.min.css">
+    <!-- Font Awesome CSS-->
+    <link rel="stylesheet" href="../../vendor/font-awesome/css/font-awesome.min.css">
+    <!-- Fontastic Custom icon font-->
+    <link rel="stylesheet" href="../../css/fontastic.css">
+    <!-- Google fonts - Poppins -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,700">
+    <!-- theme stylesheet-->
+    <link rel="stylesheet" href="../../css/style.red.css" id="theme-stylesheet">
+    <!-- Custom stylesheet - for your changes-->
+    <link rel="stylesheet" href="../../css/custom.css">
+    <!-- Favicon-->
+    <link rel="shortcut icon" href="../img/favicon.ico">
+    <!-- Tweaks for older IEs--><!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->
+  </head>
+  <body>
+    <div class="page login-page">
+      <div class="container d-flex align-items-center">
+        <div class="form-holder has-shadow">
+          <div class="row mt-2">
+            <!-- Logo & Information Panel-->
+            <div class="col-lg-6">
+              <div class="info d-flex align-items-center">
+                <div class="content">
+                  <div class="logo">
+                    <img src="../../img/logo_tecno.png" class="img-fluid" style="width: 30%; margin: 0 0 5% 35%;">
+                    <h1 class="text-center">{appna}</h1>                    
+                  </div>
+                  <!--<p>Plataforma de mantenimiento e inspecciones</p>-->
+                </div>
+              </div>
+            </div>
+            <!-- Form Panel    -->
+            <div class="col-lg-6 bg-white">
+              <div class="form d-flex align-items-center mt-2">
+                <div class="content">
+                  
+                  <form id="frmChngPass" method="post" class="form-validate">
+                    
+                    <!--<input type="hidden" name="model" value="recopass">
+                    <input type="hidden" name="method" value="psschng">-->
+                    <input type="hidden" name="hidId" id="hidId" value="{usuario}">
+
+                    <div class="form-group">
+                      <label for="txtPswdAnt" class="form-control-label">Contraseña generada</label>
+                      <input id="txtPswdAnt" type="password" name="txtPswdAnt" class="form-control" autocomplete="off" value="">                      
+                    </div>
+
+                    <div class="form-group">
+                        <label for="txtPswdN1" class="form-control-label">Contraseña nueva</label>
+                        <input id="txtPswdN1" type="password" name="txtPswdN1" class="form-control" autocomplete="off" value="">                      
+                    </div>
+
+                    <div class="form-group">
+                        <label for="txtPswdN2" class="form-control-label">Confirme contraseña nueva</label>
+                        <input id="txtPswdN2" type="password" name="txtPswdN2" class="form-control" autocomplete="off" value="">                      
+                    </div>
+
+                    <!--<a id="login" href="index.html" class="btn btn-primary">Iniciar</a>-->
+                    <button type="button" id="btnSave" class="btn btn-primary" disabled>
+                      Iniciar &nbsp;&nbsp;<i class="fa fa-sign-in"></i>
+                    </button>
+
+                    <!-- This should be submit button but I replaced it with <a> for demo purposes-->
+                  </form>
+
+                  <p class="soporte-cont text-center">
+                    Soporte <br> 
+                    <i class="fa fa-phone fa-lg text-danger" aria-hidden="true"></i> 3770415 ext 136 &nbsp;-&nbsp;
+                    <i class="fa fa-mobile fa-lg text-danger" aria-hidden="true"></i> +57 301 5011913 <br> 
+                    <i class="fa fa-envelope fa-lg text-danger" aria-hidden="true"></i> atorres@tecno-fuego.com.co
+                  </p>
+
+                </div>
+
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="copyrights text-center">
+        <p class="copytext">
+          Soporte &nbsp; 
+          <i class="fa fa-phone fa-lg text-danger" aria-hidden="true"></i> +57 315 4569087 &nbsp; 
+          <i class="fa fa-envelope fa-lg text-danger" aria-hidden="true"></i> soporte@biai-tech.com
+        </p>
+      </div>
+    </div>
+
+    <!-- JavaScript files-->
+    <script src="../../vendor/jquery/jquery.min.js"></script>
+    <script src="../../vendor/popper.js/umd/popper.min.js"> </script>
+    <script src="../../vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../../vendor/jquery.cookie/jquery.cookie.js"> </script>
+    <script src="../../vendor/chart.js/Chart.min.js"></script>
+    <script src="../../vendor/jquery-validation/jquery.validate.min.js"></script>
+    <!-- Main File-->
+    <script src="../../js/front.js"></script>
+    <script src="../../js/main.js"></script>
+
+    <script type="text/javascript">
+
+        var sta1 = 0, sta2 = 0;
+      
+        // Validar contraseña anterior
+        $(document).on('blur','#txtPswdAnt',function(){
+      
+          if( $(this).val().length > 0 ){
+      
+            let params = {
+              'model'  : 'recopass',
+              'method' : 'verifpass',
+              'args'   : { 
+                  'idu' : $('#hidId').val(),
+                  'pwd' : $(this).val()
+              }              
+            };
+      
+            $.ajax({
+              url: 'index.php',
+              type: 'POST',
+              dataType: 'text',
+              data: params,
+              cache: false, // Appends _={timestamp} to the request query string
+              success: function($dres) {
+                if( $dres == 0 ){
+                  $('#txtPswdAnt').removeClass('is-invalid').addClass('is-valid');
+                  sta1 = 0;
+                } else {
+                  $('#txtPswdAnt').removeClass('is-valid').addClass('is-invalid');
+                  sta1 = 1;
+                }
+              }
+            });
+      
+          } else {
+            $(this).addClass('is-invalid');
+          }
+      
+        });
+      
+        // Validar nueva contraseña
+        $('#txtPswdN2').keyup(function(e) {
+      
+          if( $(this).val().length > 0 ){
+      
+            if( $(this).val() == $('#txtPswdN1').val() ){
+              $(this).removeClass('is-invalid').addClass('is-valid');
+              sta2 = 0;
+            } else {
+              $(this).removeClass('is-valid').addClass('is-invalid');
+              sta2 = 1;
+            }
+      
+            evalAction();
+      
+          }
+      
+        });
+      
+        function evalAction(){
+          var sta = sta1 + sta2;
+          if( sta == 0 ){
+            $('#btnSave').disable(false);
+          } else {
+            $('#btnSave').disable(true);
+          }
+          console.log('Estado de la acción '+sta);
+        }
+
+        // Enviar datos
+        $(document).on('click','#btnSave',function(){
+
+            let params = {
+              'model'  : 'recopass',
+              'method' : 'psschng',
+              'args'   : $('#frmChngPass').formToObject()
+            };
+
+            $.ajax({
+                url: 'index.php',
+                type: 'POST',
+                dataType: 'json',
+                data: params,
+                cache: false, // Appends _={timestamp} to the request query string
+                success: function($dres) {
+                    if( $dres.edo == 0 ){
+                        //location.href = $dres.pag;
+                        //alert($dres.pag);
+                        window.location.href = $dres.pag;
+                    }
+                }
+            });
+
+        });
+      
+      </script>
+
+  </body>
+</html>

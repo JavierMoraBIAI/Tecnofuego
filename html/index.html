@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>{title}</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="robots" content="all,follow">
+    <meta http-equiv="Expires" content="0">
+    <meta http-equiv="Last-Modified" content="0">
+    <meta http-equiv="Cache-Control" content="no-cache, mustrevalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <!-- Bootstrap CSS-->
+    <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">
+    <!-- Font Awesome CSS-->
+    <link rel="stylesheet" href="vendor/font-awesome/css/font-awesome.min.css">
+    <!-- Fontastic Custom icon font-->
+    <link rel="stylesheet" href="css/fontastic.css">
+    <!-- Google fonts - Poppins -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,700">
+    <!-- theme stylesheet-->
+    <link rel="stylesheet" href="css/style.red.css" id="theme-stylesheet">
+    <!-- Custom stylesheet - for your changes-->
+    <link rel="stylesheet" href="css/custom.css">
+    <!-- Favicon-->
+    <link rel="shortcut icon" href="img/favicon.ico">
+    <!-- Datatables CSS -->
+    <link rel="stylesheet" href="css/datatables.min.css" id="theme-stylesheet">
+    <!-- Datetimepicker CSS -->
+    <link rel="stylesheet" href="css/bootstrap-datepicker3.standalone.min.css" id="theme-stylesheet">
+    <!-- Tweaks for older IEs--><!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->
+  </head>
+  <body>
+    
+    <input type="hidden" name="hidPerf" id="hidPerf" value="{ideperf}">
+    <input type="hidden" name="hidComp" id="hidComp" value="{idecomp}">
+    <input type="hidden" name="hidProy" id="hidProy" value="{ideproy}">
+
+    <div class="page">
+      <!-- Main Navbar-->
+      <header class="header">
+        <nav class="navbar">
+          <!-- Search Box-->
+          <div class="search-box">
+            <button class="dismiss"><i class="icon-close"></i></button>
+            <form id="searchForm" action="#" role="search">
+              <input type="search" placeholder="What are you looking for..." class="form-control">
+            </form>
+          </div>
+          <div class="container-fluid">
+            <div class="navbar-holder d-flex align-items-center justify-content-between">
+              <!-- Navbar Header-->
+              <div class="navbar-header">
+                <!-- Navbar Brand --><a href="{urlbase}" class="navbar-brand d-none d-sm-inline-block">
+                  <div class="brand-text d-none d-lg-inline-block">
+                    <img src="img/logo_tecno.png" class="img-logo">
+                    <span>{appna} </span>
+                  </div>
+                  <div class="brand-text d-none d-sm-inline-block d-lg-none"><strong>BD</strong></div></a>
+                <!-- Toggle Button-->
+              </div>
+              <!-- Navbar Menu -->
+              <ul class="nav-menu list-unstyled d-flex flex-md-row align-items-md-center">
+                <!-- Cambiar password -->
+                <li class="nav-item" title="Cambiar contraseña"><a href="passwd" class="nav-link logout launch-mod"><i class="fa fa-key"></i></a></li>
+                <!-- Logout -->
+                <li class="nav-item" title="Salir"><a href="{logout}" class="nav-link logout"><i class="fa fa-sign-out"></i></a></li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+      </header>
+      <div class="page-content d-flex align-items-stretch"> 
+
+        <!-- Side Navbar -->
+        <nav class="side-navbar">
+
+          <div class="row">
+            <div class="col-lg-12 text-center">
+              <div class="ava-pic">{foto}</div>
+              <h1 class="usname">{usrname}</h1>
+              <span class="text-proy">{proyecto}</span><br>
+              <span class="text-success text-cargo">{positio}</span>
+            </div>
+          </div>
+
+          <!-- Sidebar Navidation Menus-->
+          <!--<span class="heading">Menú principal</span>-->
+
+          {menu}
+
+          <div class="row">
+            <div class="col-lg-12 text-center">
+              <a id="toggle-btn" href="#" class="menu-btn active left-arrow">
+                <i class="fa fa-arrow-circle-left fa-2x"></i>
+              </a>
+            </div>
+          </div>
+
+        </nav>
+        
+        <!-- Contenador -->
+        <div id="module-cont" class="content-inner">
+          
+            <!-- Page Header-->
+            <header class="page-header">
+              <div class="container-fluid">
+                <div class="row mt-2 row-nospace">
+                  <div class="col-md-8">
+                    <h2 class="no-margin-bottom" style="margin-top: -1.3%;">Dashboard</h2>
+                  </div>
+                  <div class="col-md-3">
+                    <p class="ansul-slogan">Distribuidor autorizado de:</p>                    
+                  </div>
+                  <div class="col-md-1 text-left">
+                    <img src="img/AnsulLogo.png" class="img-ansul pull-right">
+                  </div>
+                </div>                
+              </div>
+            </header>
+
+            <!-- Dashboard Header Section    -->
+            <section class="dashboard-header">
+
+              <div class="container-fluid">
+
+                <div class="row">
+
+                    <div class="col-lg-12">
+                      
+                      <div class="card">
+                        
+                        <div class="card-header">
+                          
+                          <b>Actividades</b>
+
+                          <span class="pull-right text-muted">
+                            <select id="slcTySysMod" name="slcTySysMod" class="form-control form-control-sm">
+                              <option value="">Seleccione mes</option>
+                              <option value="10-2019">Octubre 2019</option>
+                              <option value="11-2019">Noviembre 2019</option>
+                              <option value="12-2019">Diciembre 2019</option>
+                              <option value="1-2020">Enero 2020</option>
+                            </select>
+                          </span>
+
+                        </div>
+
+                        <div class="card-body">
+
+                          <div class="contenedor">
+
+                            <div class="contenido">
+
+                              <div class="row">
+
+                                <div class="col-lg-6 dash-icon-cont">
+                                  <!--<i class="fa fa-wrench fa-lg blue-text-icon" aria-hidden="true"></i>-->
+                                  <h4 class="blue-text-icon">MA</h4>
+                                </div>
+
+                                <div class="col-lg-6">
+
+                                  <div class="row">
+                                    <div class="col-lg-12">
+                                      <span class="dash-title">Mantenimientos</span>
+                                    </div>
+                                  </div>
+
+                                  <div class="row">
+                                    <div class="col-lg-12">
+                                      <span class="title-dash title-dash-blue">{cntmmto}</span>
+                                    </div>
+                                  </div>
+
+                                  <!--<div class="row">
+                                    <div class="col-lg-12">
+                                      <span class="text-foot-dash">$ 27.000</span>
+                                    </div>
+                                  </div>-->
+
+                                </div>
+
+                              </div>
+
+                            </div>
+
+                            <div class="contenido">
+                              
+                              <div class="row">
+
+                                <div class="col-lg-6 dash-icon-cont">
+                                  <!--<i class="fa fa-search fa-lg dark-blue-text-icon" aria-hidden="true"></i>-->
+                                  <h4 class="dark-blue-text-icon">&nbsp;IN</h4>
+                                </div>
+
+                                <div class="col-lg-6">
+
+                                  <div class="row">
+                                    <div class="col-lg-12">
+                                      <span class="dash-title">Inspecciones</span>
+                                    </div>
+                                  </div>
+
+                                  <div class="row">
+                                    <div class="col-lg-12">
+                                      <span class="title-dash title-dash-dark-blue">{cntinsp}</span>
+                                    </div>
+                                  </div>
+
+                                  <!--<div class="row">
+                                    <div class="col-lg-12">
+                                      <span class="text-foot-dash">$ 7.000</span>
+                                    </div>
+                                  </div>-->
+                                
+                                </div>
+
+                              </div>
+
+                            </div>
+
+                            <div class="contenido">
+
+                              <div class="row">
+
+                                <div class="col-lg-6 dash-icon-cont">
+                                  <!--<i class="fa fa-fire-extinguisher fa-lg dark-gray-text-icon" aria-hidden="true"></i>-->
+                                  <h4 class="dark-gray-text-icon">RC</h4>
+                                </div>
+
+                                <div class="col-lg-6">
+
+                                  <div class="row">
+                                    <div class="col-lg-12">
+                                      <span class="dash-title">Recargas</span>
+                                    </div>
+                                  </div>
+
+                                  <div class="row">
+                                    <div class="col-lg-12">
+                                      <span class="title-dash title-dash-dark-gray">{cntreca}</span>
+                                    </div>
+                                  </div>
+
+                                  <!--<div class="row">
+                                    <div class="col-lg-12">
+                                      <span class="text-foot-dash">$ 2.000</span>
+                                    </div>
+                                  </div>-->
+
+                                </div>
+
+                              </div>
+
+                            </div>
+                            
+                            <div class="contenido">
+                            
+                              <div class="row">
+
+                                <div class="col-lg-6 dash-icon-cont">
+                                  <!--<i class="fa fa-refresh fa-lg blue-text-icon" aria-hidden="true"></i>-->
+                                  <h4 class="blue-text-icon">&nbsp;RI</h4>
+                                </div>
+
+                                <div class="col-lg-6">
+
+                                  <div class="row">
+                                    <div class="col-lg-12">
+                                      <span class="dash-title">Reinstalaciones</span>
+                                    </div>
+                                  </div>
+
+                                  <div class="row">
+                                    <div class="col-lg-12">
+                                      <span class="title-dash title-dash-blue">{cntrein}</span>
+                                    </div>
+                                  </div>
+
+                                  <!--<div class="row">
+                                    <div class="col-lg-12">
+                                      <span class="text-foot-dash">$ 700</span>
+                                    </div>
+                                  </div>-->
+                                  
+                                </div>
+
+                              </div>
+                            
+                            </div>
+                            
+                            <div class="contenido">
+                            
+                              <div class="row">
+
+                                <div class="col-lg-6 dash-icon-cont">
+                                  <!--<i class="fa fa-exclamation-circle fa-lg red-text-icon" aria-hidden="true"></i>-->
+                                  <h4 class="red-text-icon">EM</h4>
+                                </div>
+
+                                <div class="col-lg-6">
+
+                                  <div class="row">
+                                    <div class="col-lg-12">
+                                      <span class="dash-title">Emergencias</span>
+                                    </div>
+                                  </div>
+
+                                  <div class="row">
+                                    <div class="col-lg-12">
+                                      <span class="title-dash title-dash-red">{cntemer}</span>
+                                    </div>
+                                  </div>
+
+                                  <!--<div class="row">
+                                    <div class="col-lg-12">
+                                      <span class="text-foot-dash">$ 200</span>
+                                    </div>
+                                  </div>-->
+                                  
+                                </div>
+
+                              </div>
+
+                            </div>
+
+                          </div>
+
+                        </div>
+
+                        <div class="card-footer">
+
+                          <div class="row">
+                            <div class="col-lg-4 offset-lg-8">
+                              <a href="#" class="btn btn-dark btn-sm">
+                                &nbsp;  Ver reporte completo en Qlik &nbsp;                              
+                                <img src="img/icono_qlik.png" class="img-fluid logo-qlik" alt="logo qlik">
+                              </a>
+                            </div>
+                          </div>
+
+                        </div>
+
+                      </div>
+
+                    </div>
+
+                </div>
+
+                <div class="row mt-3">
+
+                    <div class="col-lg-12">
+                      
+                      <div class="card">
+                        
+                        <div class="card-header">
+                          
+                          <b>Últimas actividades registradas</b>
+
+                        </div>
+
+                        <div class="card-body">
+
+                          <div class="row mt-3">
+
+                            <div class="col-lg-12" style="font-size: 0.78em;">
+
+                              {lactiv}
+
+                            </div>
+
+                          </div>
+
+                        </div>
+
+                      </div>
+
+                    </div>
+
+                </div>
+
+              </div>
+
+            </section>
+
+            {footer}
+
+        </div>
+        <!-- Contenido -->
+
+      </div>
+    </div>
+
+    <!-- Ventanas modales -->
+
+    <!-- Ventana emergente del detalle del registro -->
+    <div class="modal fade" id="wModDty">
+      <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+
+          <!-- Modal Header -->
+          <div class="modal-header">
+            <h4 id="dtyTitle" class="modal-title"></h4>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+          </div>
+
+          <!-- Modal body -->
+          <div id="modBodDty" class="modal-body"></div>
+
+          <!-- Modal footer -->
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-dismiss="modal">
+              Cerrar &nbsp;&nbsp;<i class="fa fa-times"></i>
+            </button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <!-- Fin ventana emergente del detalle del registro -->
+
+    <!-- JavaScript files-->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/popper.js/umd/popper.min.js"> </script>
+    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script src="vendor/jquery.cookie/jquery.cookie.js"> </script>
+    <script src="vendor/chart.js/Chart.min.js"></script>
+    <script src="vendor/jquery-validation/jquery.validate.min.js"></script>
+    <script src="js/charts-home.js"></script>
+    <!-- Main File-->
+    <script src="js/front.js"></script>
+    <!-- My Main File -->
+    <script src="js/main.js?v={time}"></script>
+    <!-- Datatables JS -->
+    <script src="js/datatables.min.js"></script>
+    <!-- Dateime JS -->
+    <script src="js/moments.js"></script>
+    <script src="js/bootstrap-datepicker.min.js"></script>
+    <script src="js/bootstrap-datepicker.es.js"></script>
+    <!-- Otros JS -->
+    <!--<script type="text/javascript" src="js/eqedit.js?v={time}"></script>-->
+    <script type="text/javascript" src="js/equipment.js?v={time}"></script>
+    <script type="text/javascript" src="js/valprofile.js?v={time}"></script>
+    <script type="text/javascript" src="js/mmtos.js?v={time}"></script>
+    <script type="text/javascript">
+      renderDT();
+    </script>
+  </body>
+</html>

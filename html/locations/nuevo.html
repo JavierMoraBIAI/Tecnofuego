@@ -1,0 +1,102 @@
+<script type="text/javascript">
+
+	$(document).on('change','#slcEmpresa',function(){
+
+		let cnf = {
+		model  : 'locations',
+		method : 'sitios',
+		params : {
+			com : $(this).val(),
+			def : '',
+			typ : 'echo'
+		},
+		target : 'slcSitios'
+		};
+
+		cmbdep(cnf);
+
+	});
+
+</script>
+
+{header}
+
+<br>
+
+<div class="col-lg-12">
+
+	<div class="card">
+
+		<div class="card-header d-flex align-items-center">
+			<h3 class="h4">Nueva locación/área</h3>
+		</div>
+
+		<div class="card-body">
+
+			<p>Los campos marcados con asterisco <b class="text-danger">*</b> son <b class="text-danger">requeridos</b> </p>
+
+			<form id="locations" name="locations" action="guardar">
+
+				<input type="hidden" id="hidId" name="hidId" value="">
+				
+				<div class="row">
+
+					<div class="col-lg-4">
+						<div class="form-group">
+							<label class="form-control-label">Empresa <span class="text-danger">*</span></label>
+							<select id="slcEmpresa" name="slcEmpresa" class="form-control" required="">{empresas}</select>
+						</div>
+					</div>
+
+					<div class="col-lg-8">
+						<div class="form-group">
+							<label class="form-control-label">Proyectos/Minas <span class="text-danger">*</span></label>
+							<select id="slcSitios" name="slcSitios" class="form-control" required=""></select>
+						</div>
+					</div>
+
+		      	</div>
+
+		        <div class="row">
+
+					<div class="col-lg-8">
+						<div class="form-group">
+							<label class="form-control-label">Nombre locación/área <span class="text-danger">*</span></label>
+							<input type="text" id="txtNombre" name="txtNombre" placeholder="Nombre de la locación" class="form-control" value="" required="">
+						</div>
+					</div>
+
+					<div class="col-lg-4">
+						<div class="form-group">
+							<label class="form-control-label">Estado <span class="text-danger">*</span></label>
+							<select id="slcEstado" name="slcEstado" class="form-control" required="">{estados}</select>
+						</div>
+					</div>
+
+		        </div>
+
+		      	<br>
+
+			</form>
+
+		</div>
+
+		<div class="card-footer text-right">
+
+			<button id="btnSave" type="button" class="btn btn-success" model="locations" method="guardar" form="0" target="module-cont">
+				Guardar &nbsp;&nbsp;<i class="fa fa-save"></i>
+			</button>
+
+			&nbsp;&nbsp;
+
+			<button id="btnCancel" type="button" class="btn btn-danger" action="back" modbak="index" target="module-cont">
+				Cancelar &nbsp;&nbsp;<i class="fa fa-times"></i>
+			</button>
+
+		</div>
+
+	</div>
+
+</div>
+
+{footer}

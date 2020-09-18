@@ -1,0 +1,133 @@
+<script type="text/javascript">
+
+  var sta1 = 0, sta2 = 0;
+
+  // Validar contraseña anterior
+  $(document).on('blur','#txtPswdAnt',function(){
+
+    if( $(this).val().length > 0 ){
+
+      let params = {
+        'model'  : currentModel,
+        'method' : 'verifpass',
+        'args'   : $(this).val()
+      };
+
+      $.ajax({
+        url: 'index.php',
+        type: 'POST',
+        dataType: 'text',
+        data: params,
+        cache: false, // Appends _={timestamp} to the request query string
+        success: function($dres) {
+          if( $dres == 0 ){
+            $('#txtPswdAnt').removeClass('is-invalid').addClass('is-valid');
+            sta1 = 0;
+          } else {
+            $('#txtPswdAnt').removeClass('is-valid').addClass('is-invalid');
+            sta1 = 1;
+          }
+        }
+      });
+
+    } else {
+      $(this).addClass('is-invalid');
+    }
+
+  });
+
+  // Validar nueva contraseña
+  $('#txtPswdN2').keyup(function(e) {
+
+    if( $(this).val().length > 0 ){
+
+      if( $(this).val() == $('#txtPswdN1').val() ){
+        $(this).removeClass('is-invalid').addClass('is-valid');
+        sta2 = 0;
+      } else {
+        $(this).removeClass('is-valid').addClass('is-invalid');
+        sta2 = 1;
+      }
+
+      evalAction();
+
+    }
+
+  });
+
+  function evalAction(){
+    var sta = sta1 + sta2;
+    if( sta == 0 ){
+      $('#btnSave').disable(false);
+    } else {
+      $('#btnSave').disable(true);
+    }
+    console.log('Estado de la acción '+sta);
+  }
+
+</script>
+
+{header}
+
+<br>
+
+<div class="col-lg-12">
+
+  <div class="card">
+
+    <div class="card-header d-flex align-items-center">
+      <h3 class="h4">Formulario de cambio de contraseña</h3>
+    </div>
+    
+    <div class="card-body">
+      
+      <form id="passwd" name="passwd" action="guardar" autocomplete="off">
+
+      	<div class="row">
+
+          <div class="col-lg-4">
+            <div class="form-group">
+              <label class="form-control-label">Contraseña anterior  <span class="text-danger">(*)</span></label>
+              <input type="password" id="txtPswdAnt" name="txtPswdAnt" placeholder="Ingrese contraseña anterior" class="form-control" required="" autocomplete="off">
+            </div>
+          </div>
+
+          <div class="col-lg-4">
+            <div class="form-group">
+              <label class="form-control-label">Contraseña nueva  <span class="text-danger">(*)</span></label>
+              <input type="password" id="txtPswdN1" name="txtPswdN1" placeholder="Ingrese nueva contraseña" class="form-control" required="" autocomplete="off">
+            </div>
+          </div>
+
+          <div class="col-lg-4">
+            <div class="form-group">
+              <label class="form-control-label">Confirme contraseña nueva  <span class="text-danger">(*)</span></label>
+              <input type="password" id="txtPswdN2" name="txtPswdN2" placeholder="Confirme nueva contraseña" class="form-control" required="" autocomplete="off">
+            </div>
+          </div>
+
+      	</div>
+
+      </form>
+
+    </div>
+
+    <div class="card-footer text-right">
+
+    	<button id="btnSave" type="button" class="btn btn-success" model="passwd" method="guardar" form="0" target="module-cont" disabled="">
+    		Cambiar contraseña &nbsp;&nbsp;<i class="fa fa-save"></i>
+    	</button>
+
+    	&nbsp;&nbsp;
+
+    	<button id="btnCancel" type="button" class="btn btn-danger" action="clean-form">
+    		Cancelar &nbsp;&nbsp;<i class="fa fa-times"></i>
+    	</button>
+
+    </div>
+  
+  </div>
+
+</div>
+
+{footer}
