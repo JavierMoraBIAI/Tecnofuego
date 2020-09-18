@@ -119,9 +119,7 @@ $(document).on('click','a[action=sel]',function(e){
   $('#btnCancelModEquip').click();
 
   let met = $(this).attr('href');
-  let arg = $(this).parent().parent().find('td:eq(1)').text();
-
-  console.log(arg);
+  let arg = $(this).parent().parent().find('td:eq(0)').text();
 
   setTimeout(function(){
     loadNew(met,arg);
@@ -130,7 +128,6 @@ $(document).on('click','a[action=sel]',function(e){
 });
 
 function loadNew(met,arg){
-
 
   $('html, body').animate({ scrollTop: 0 }, 'fast');
 

@@ -38,7 +38,7 @@
 			</div>
 
 			<div class="row">
-				 
+				
 				<div class="col-lg-12">
 
 					<form id="mmtos" name="mmtos" action="guardar">
@@ -51,8 +51,8 @@
 						<input type="hidden" id="hidVlsAddComp" name="hidVlsAddComp" value="">
 						<input type="hidden" id="hidVlsDelComp" name="hidVlsDelComp" value="">
 						<!-- Control de repuestos -->
-						<input type="hidden" id="hidVlsAddRep" name="hidVlsAddRep" value="">
-						<input type="hidden" id="hidVlsDelRep" name="hidVlsDelRep" value="">
+						<input type="text" id="hidVlsAddRep" name="hidVlsAddRep" value="">
+						<input type="text" id="hidVlsDelRep" name="hidVlsDelRep" value="">
 
 						<ul class="nav nav-tabs" id="myTab" role="tablist">
 						  <li class="nav-item">
@@ -133,8 +133,8 @@
 
 								<div class="col-lg-6">
 									<div class="form-group">
-										<label class="form-control-label">Localización <span class="text-danger"></span></label>
-										<select id="slcLocal" name="slcLocal" class="form-control">{locatio}</select>
+										<label class="form-control-label">Localización <span class="text-danger">*</span></label>
+										<select id="slcLocal" name="slcLocal" class="form-control" required="">{locatio}</select>
 									</div>
 								</div>
 
@@ -229,53 +229,8 @@
 						  </div>
 						  
 						  <div class="tab-pane fade" id="compone" role="tabpanel" aria-labelledby="compone-tab">
-								<div class="row">
-									<div class="col-lg-1">
-										<div class="form-group">
-											<label class="form-control-label">&nbsp;</label>
-											<button id="btnAddCmp" type="button" class="btn btn-info form-control">
-												<i class="fa fa-plus"></i>
-											</button>
-										</div>
-									</div>
-								</div>
 
-								<br>
-
-								<div class="row">
-
-									<div class="col-lg-12">
-
-										<table id="tabCompos" class="table table-hover table-striped newrone-table">
-											<thead>
-												<tr>
-													<th class="text-center" width="5%">
-														Ítem
-													</th>
-													<th class="text-center" width="40%">
-														Descripción
-													</th>
-													<th class="text-center" width="20%">
-														SN/Consec.
-													</th>
-													<th class="text-center" width="20%">
-														Familia
-													</th>
-													<th class="text-center" width="20%">
-														Categoría
-													</th>
-													<th class="text-center" width="5%">
-														Acciones
-													</th>
-												</tr>
-											</thead>
-											<tbody id="tcompos"></tbody>
-										</table>
-
-									</div>
-
-								</div>
-							
+							{accorde}
 
 						  </div>
 
@@ -432,120 +387,121 @@
 <div class="modal fade" id="modCompos" tabindex="-1" role="dialog" aria-labelledby="modComposLabel" aria-hidden="true">
 	<div class="modal-dialog modal-lg" role="document">
 		<div class="modal-content">
-		<div class="modal-header">
-			<h5 class="modal-title" id="modComposLabel">Agregar componente a la lista</h5>
-			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-			<span aria-hidden="true">&times;</span>
-			</button>
-		</div>
-		<div class="modal-body">
-
-			<div id="rowMsgModal" class="row hidden-row">
-				<div class="col-lg-12">
-					<div id="contMsgModal" class="alert alert-danger"></div>
-				</div>
+			<div class="modal-header">
+				<h5 class="modal-title" id="modComposLabel">Reemplazar componente en el equipo</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+				</button>
 			</div>
+			<div class="modal-body">
 
-			<form id="frmModalCompo" name="frmModalCompo">
-
-				<div class="row">
-
-					<div class="col-lg-4">
-						<div class="form-group">
-							<label class="form-control-label">Cliente <span class="text-danger">*</span></label>
-							<select id="slcClienteMod" name="slcClienteMod" class="form-control form-control-sm cliente">{empmodal}</select>
-							<input type="hidden" name="hidClienteMod" id="hidClienteMod" class="clihid">
-						</div>
+				<div id="rowMsgModal" class="row hidden-row">
+					<div class="col-lg-12">
+						<div id="contMsgModal" class="alert alert-danger"></div>
 					</div>
-
-					<div class="col-lg-8">
-						<div class="form-group">
-							<label class="form-control-label">Proyectos/Minas <span class="text-danger">*</span></label>
-							<select id="slcSitiosMod" name="slcSitiosMod" class="form-control form-control-sm proyecto"></select>
-							<input type="hidden" name="hidProyectoMod" id="hidProyectoMod" class="proyhid">
-						</div>
-					</div>
-
 				</div>
 
-				<div class="row">
+				<form id="frmModalCompo" name="frmModalCompo">
 
-					<div class="col-lg-4">
-						<div class="form-group">
-							<label class="form-control-label">Tipo de sistema <span class="text-danger">*</span></label>
-							<select id="slcTySysMod" name="slcTySysMod" class="form-control form-control-sm">{sistemas}</select>
+					<div class="row">
+
+						<div class="col-lg-4">
+							<div class="form-group">
+								<label class="form-control-label">Cliente <span class="text-danger">*</span></label>
+								<select id="slcClienteMod" name="slcClienteMod" class="form-control form-control-sm cliente">{empresas}</select>
+								<input type="hidden" name="hidClienteMod" id="hidClienteMod" class="clihid">
+							</div>
 						</div>
+
+						<div class="col-lg-8">
+							<div class="form-group">
+								<label class="form-control-label">Proyectos/Minas <span class="text-danger">*</span></label>
+								<select id="slcSitiosMod" name="slcSitiosMod" class="form-control form-control-sm proyecto"></select>
+								<input type="hidden" name="hidProyectoMod" id="hidProyectoMod" class="proyhid">
+							</div>
+						</div>
+
 					</div>
 
-					<div class="col-lg-4">
-						<div class="form-group">
-							<label class="form-control-label">Familias <span class="text-danger">*</span></label>
-							<select id="slcFamiliasMod" name="slcFamiliasMod" class="form-control form-control-sm">{familia}</select>
-						</div>
-					</div>
-	
-					<div class="col-lg-4">
-						<div class="form-group">
-							<label class="form-control-label">Categorías <span class="text-danger">*</span></label>
-							<select id="slcCategoriasMod" name="slcCategoriasMod" class="form-control form-control-sm">{categoria}</select>
-						</div>
-					</div>
+					<div class="row">
 
-				</div>
-
-				<div class="row">
-
-					<div class="col-lg-8">
-						<div class="form-group">
-							<label class="form-control-label">Descripción <span class="text-danger">*</span></label>
-							<input type="text" id="txtDescMod" name="txtDescMod" placeholder="Descripción" class="form-control form-control-sm">
+						<div class="col-lg-4">
+							<div class="form-group">
+								<label class="form-control-label">Tipo de sistema <span class="text-danger">*</span></label>
+								<select id="slcTySysMod" name="slcTySysMod" class="form-control form-control-sm">{sistemas}</select>
+							</div>
 						</div>
-					</div>
 
-					<div class="col-lg-3">
-						<div class="form-group">
-							<label class="form-control-label">Serial/Consecutivo <span class="text-danger">*</span></label>
-							<input type="text" id="txtSerialMod" name="txtSerialMod" placeholder="Serial" class="form-control form-control-sm">
+						<div class="col-lg-4">
+							<div class="form-group">
+								<label class="form-control-label">Familias <span class="text-danger">*</span></label>
+								<select id="slcFamiliasMod" name="slcFamiliasMod" class="form-control form-control-sm">{familia}</select>
+							</div>
 						</div>
+		
+						<div class="col-lg-4">
+							<div class="form-group">
+								<label class="form-control-label">Categorías <span class="text-danger">*</span></label>
+								<select id="slcCategoriasMod" name="slcCategoriasMod" class="form-control form-control-sm">{categoria}</select>
+							</div>
+						</div>
+
 					</div>
 
-					<div class="col-lg-1">
-						<div class="form-group">
-							<label class="form-control-label">&nbsp;</label>
-							<button id="btnSearchComp" type="button" class="btn btn-info form-control form-control-sm lupa-btn">
-								<i class="fa fa-search center-lupa"></i>
-							</button>
+					<div class="row">
+
+						<div class="col-lg-8">
+							<div class="form-group">
+								<label class="form-control-label">Descripción <span class="text-danger">*</span></label>
+								<input type="text" id="txtDescMod" name="txtDescMod" placeholder="Descripción" class="form-control form-control-sm">
+							</div>
 						</div>
+
+						<div class="col-lg-3">
+							<div class="form-group">
+								<label class="form-control-label">Serial/Consecutivo <span class="text-danger">*</span></label>
+								<input type="text" id="txtSerialMod" name="txtSerialMod" placeholder="Serial" class="form-control form-control-sm">
+							</div>
+						</div>
+
+						<div class="col-lg-1">
+							<div class="form-group">
+								<label class="form-control-label">&nbsp;</label>
+								<button id="btnSearchComp" type="button" class="btn btn-info form-control form-control-sm lupa-btn">
+									<i class="fa fa-search center-lupa"></i>
+								</button>
+							</div>
+						</div>
+
 					</div>
 
-				</div>
+					<br>
 
-				<br>
+					<div class="row">
 
-				<div class="row">
+						<div id="detCompos" class="col-lg-12" style="font-size: 0.8em;"></div>
 
-					<div id="detCompos" class="col-lg-12" style="font-size: 0.8em;"></div>
+					</div>
 
-				</div>
+					<br>
 
-				<br>
+				
+				</form>
 
-			
-			</form>
-
-		</div>
-		<div class="modal-footer">
-			<button id="btnCancelModCompo" type="button" class="btn btn-danger" data-dismiss="modal">
-				Cerrar &nbsp;&nbsp;<i class="fa fa-times"></i>
-			</button>
-			<button id="btnSaveModCompo" type="button" class="btn btn-success">
-				Agregar &nbsp;&nbsp;<i class="fa fa-plus"></i>
-			</button>
-		</div>
+			</div>
+			<div class="modal-footer">
+				<button id="btnCancelModCompo" type="button" class="btn btn-danger" data-dismiss="modal">
+					Cerrar &nbsp;&nbsp;<i class="fa fa-times"></i>
+				</button>
+				<button id="btnSaveModCompo" type="button" class="btn btn-success">
+					Agregar &nbsp;&nbsp;<i class="fa fa-plus"></i>
+				</button>
+			</div>
 		</div>
 	</div>
 </div>
-<!-- Modal Repuestos --> 
+
+<!-- Modal Repuestos -->
 <div class="modal fade" id="modRepuest" tabindex="-1" role="dialog" aria-labelledby="modRepuestLabel" aria-hidden="true">
 	<div class="modal-dialog modal-lg" role="document">
 		<div class="modal-content">

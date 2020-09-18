@@ -484,7 +484,7 @@ function readTableReps(){
 
     fila = firep;
 
-} 
+}
 
 // Editar valor detalle repuestos
 $(document).on('click','.edit-dty-rep',function(){

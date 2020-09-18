@@ -86,7 +86,6 @@
 
             $lbl = self::eqlabel($data);
 
-
             $d = array(
                 'data' => array(
                     'header'	    =>  $this->rndr->renderHeader('Gestionar mantenimientos'),

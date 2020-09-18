@@ -74,7 +74,7 @@ class components
     {
 
         $sql = "SELECT cy.name CLIENTE, s.name 'PROYECTO/MINA', p.description COMPONENTE, 
-                        cv.valField 'SN/CONSEC.', f.label FAMILIA, ct.label CATEGORÍA, teq.internalNumber No_EQUIPO,
+                        cv.valField 'SN/CONSEC.', f.label FAMILIA, ct.label CATEGORÍA, 
                         CASE c.edo_reg 
                             WHEN '0' THEN 'INACTIVO'
                             WHEN '1' THEN 'ACTIVO'
@@ -82,16 +82,13 @@ class components
                         ELSE 'no es un estado' END 'ESTADO',
                         CONCAT('<a idreg=\"',c.id,'\" href=\"editar\" rel=\"components\" action=\"upd\" title=\"Editar componente\" class=\"btn btn-sm btn-success\"><i class=\"fa fa-pencil\"></i></a>') MODIFICAR
                     FROM tec_components c, tec_sites s, tec_company cy, tec_parts p, 
-                        tec_compo_vals cv, tec_valists f, tec_valists ct, tec_equip_compos eid,
-                        tec_equipment teq
+                        tec_compo_vals cv, tec_valists f, tec_valists ct
                     WHERE c.siteId = s.id
                         AND s.companyId = cy.id
                         AND c.idComponent = p.id
                         AND cv.idComponent = c.id
                         AND p.idFamily = f.id
                         AND p.idCategory = ct.id
-                        AND eid.idCompo = c.id
-                        AND teq.id = eid.idEquip
                         AND cv.idField IN (31,34) ";
 
         $dp = array();
@@ -461,18 +458,18 @@ class components
 
                 case 41: // Número
                     $fbox .= '<div class="col-lg-3">
-                                    <div class="form-group">
-                                        <label class="form-control-label">' . $v['campo'] . ' <span class="text-danger">*</span></label>
-                                        <input type="text" id="' . $fld . '" idfi="' . $v['idField'] . '" name="' . $fld . '" placeholder="' . $v['campo'] . '" class="form-control ctrl-fld" required="">
-                                    </div>
-                                  </div>';
+                                        <div class="form-group">
+                                            <label class="form-control-label">' . $v['campo'] . ' <span class="text-danger">*</span></label>
+                                            <input type="number" id="' . $fld . '" idfi="' . $v['idField'] . '" name="' . $fld . '" placeholder="' . $v['campo'] . '" class="form-control ctrl-fld" required>
+                                        </div>
+                                      </div>';
                     break;
 
                 case 42: // Fecha
                     $fbox .= '<div class="col-lg-3">
                                     <div class="form-group">
                                         <label class="form-control-label">' . $v['campo'] . ' <span class="text-danger">*</span></label>
-                                        <input type="date" id="' . $fld . '" idfi="' . $v['idField'] . '" name="' . $fld . '" placeholder="' . $v['campo'] . '" class="form-control ctrl-fld" required="">
+                                        <input type="date" id="' . $fld . '" idfi="' . $v['idField'] . '" name="' . $fld . '" placeholder="' . $v['campo'] . '" class="form-control ctrl-fld" required>
                                     </div>
                                   </div>';
                     break;
@@ -481,7 +478,7 @@ class components
                     $fbox .= '<div class="col-lg-3">
                                     <div class="form-group">
                                         <label class="form-control-label">' . $v['campo'] . ' <span class="text-danger">*</span></label>
-                                        <input type="text" id="' . $fld . '" idfi="' . $v['idField'] . '" name="' . $fld . '" placeholder="' . $v['campo'] . '" class="form-control ctrl-fld" required="">
+                                        <input type="text" id="' . $fld . '" idfi="' . $v['idField'] . '" name="' . $fld . '" placeholder="' . $v['campo'] . '" class="form-control ctrl-fld" required>
                                     </div>
                                   </div>';
                     break;
@@ -518,12 +515,12 @@ class components
 
                 case 41: // Número
                     $fbox .= '<div class="col-lg-3">
-                                    <div class="form-group">
-                                        <label class="form-control-label">' . $v['campo'] . ' <span class="text-danger">*</span></label>
-                                        <input type="text" id="' . $fld . '" idfi="' . $v['idField'] . '" name="' . $fld . '" placeholder="' . $v['campo'] . '" class="form-control ctrl-fld" value="' . $v['valField'] . '" required>
-                                        <input type="hidden" id="' . $hfld . '" name="' . $hfld . '" value="' . $v['idVal'] . '">
-                                    </div>
-                                  </div>';
+                                        <div class="form-group">
+                                            <label class="form-control-label">' . $v['campo'] . ' <span class="text-danger">*</span></label>
+                                            <input type="number" id="' . $fld . '" idfi="' . $v['idField'] . '" name="' . $fld . '" placeholder="' . $v['campo'] . '" class="form-control ctrl-fld" value="' . $v['valField'] . '" required>
+                                            <input type="hidden" id="' . $hfld . '" name="' . $hfld . '" value="' . $v['idVal'] . '">
+                                        </div>
+                                      </div>';
                     break;
 
                 case 42: // Fecha
