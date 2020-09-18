@@ -119,7 +119,7 @@ $(document).on('click','a[action=sel]',function(e){
   $('#btnCancelModEquip').click();
 
   let met = $(this).attr('href');
-  let arg = $(this).parent().parent().find('td:eq(0)').text();
+  let arg = $(this).parent().parent().find('td:eq(1)').text();
 
   setTimeout(function(){
     loadNew(met,arg);
